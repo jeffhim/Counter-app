@@ -914,77 +914,98 @@
       } catch (_e) { showToast('Import failed: invalid file'); }
     }
 
-    /* ===== INIT ===== */
+    /* ===== EVENT LISTENERS (attach immediately) ===== */
+    // Nav
+    document.querySelectorAll('.nav-item').forEach(btn => {
+      btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    });
+
+    // Counter date nav
+    $('cPrev').addEventListener('click', () => { counterDate = addDays(counterDate, -1); $('cDate').value = counterDate; renderCounter(); });
+    $('cNext').addEventListener('click', () => { counterDate = addDays(counterDate, 1); $('cDate').value = counterDate; renderCounter(); });
+    $('cDate').addEventListener('change', () => { counterDate = $('cDate').value || todayStr(); renderCounter(); });
+    $('cToday').addEventListener('click', () => { counterDate = todayStr(); $('cDate').value = counterDate; renderCounter(); });
+
+    // Counter +/-
+    $('cPlus').addEventListener('click', () => adjustCount(1));
+    $('cMinus').addEventListener('click', () => adjustCount(-1));
+    $('cInput').addEventListener('change', setCountFromInput);
+    $('cInput').addEventListener('input', updateInputWidth);
+    $('cInput').addEventListener('focus', () => $('cInput').select());
+
+    // Period selector
+    $('periodSel').addEventListener('click', e => {
+      const btn = e.target.closest('.period-btn');
+      if (!btn) return;
+      selectedPeriod = btn.dataset.period;
+      renderPeriodSelector();
+      const cr = $('customRange');
+      if (selectedPeriod === 'custom') { cr.classList.add('show'); }
+      else { cr.classList.remove('show'); renderAnalytics(); }
+    });
+    $('anStart').addEventListener('change', () => { if (selectedPeriod === 'custom') renderAnalytics(); });
+    $('anEnd').addEventListener('change', () => { if (selectedPeriod === 'custom') renderAnalytics(); });
+
+    // Save record
+    $('saveRecBtn').addEventListener('click', saveRecord);
+
+    // Save category
+    $('saveCatBtn').addEventListener('click', saveCategory);
+
+    // Modal closes
+    document.querySelectorAll('.modal-close').forEach(btn => {
+      btn.addEventListener('click', () => hideModal(btn.dataset.modal));
+    });
+    document.querySelectorAll('.modal-overlay').forEach(ov => {
+      ov.addEventListener('click', e => { if (e.target === ov) hideModal(ov.id); });
+    });
+
+    // Confirm
+    $('confirmYes').addEventListener('click', () => { hideModal('confirmModal'); if (confirmResolve) confirmResolve(true); });
+    $('confirmNo').addEventListener('click', () => { hideModal('confirmModal'); if (confirmResolve) confirmResolve(false); });
+
+    // Export / Import
+    $('exportBtn').addEventListener('click', exportData);
+    $('importBtn').addEventListener('click', () => $('importFile').click());
+    $('importFile').addEventListener('change', e => { if (e.target.files[0]) importData(e.target.files[0]); e.target.value = ''; });
+
+    /* ===== INIT (async data loading) ===== */
     async function init() {
-      if (firestore) {
-        try { await firestore.enablePersistence(); } catch (_e) { /* offline cache may not work, but Firestore still functions */ }
-      } else {
-        usingMemory = true;
-        $('storageWarn').innerHTML = '<div class="storage-warn"><i class="fas fa-exclamation-triangle"></i> Firebase unavailable. Data will be lost on refresh. Use Export to save.</div>';
-      }
-      categories = await getCategories();
+      // Set up UI defaults immediately
       $('headerDate').textContent = fmtDate(todayStr());
       $('cDate').value = counterDate;
       const r = getRange('week');
       $('anStart').value = r.start;
       $('anEnd').value = r.end;
       renderPeriodSelector();
+      updateInputWidth();
+
+      // Connect to Firestore (with timeout fallback)
+      if (firestore) {
+        try { await firestore.enablePersistence(); } catch (_e) { /* offline cache may not work */ }
+        try {
+          // Test connection with a 5-second timeout
+          const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 5000));
+          await Promise.race([getCategories(), timeout]);
+        } catch (_e) {
+          // Firestore not responding — fall back to memory
+          usingMemory = true;
+          firestore = null;
+        }
+      }
+
+      if (!firestore) {
+        usingMemory = true;
+        $('storageWarn').innerHTML = '<div class="storage-warn"><i class="fas fa-exclamation-triangle"></i> Firebase unavailable. Data will be lost on refresh. Use Export to save.</div>';
+      }
+
+      // Load data and render
+      try {
+        categories = await getCategories();
+      } catch (_e) {
+        categories = [];
+      }
       renderCounter();
-
-      /* ===== EVENT LISTENERS ===== */
-      // Nav
-      document.querySelectorAll('.nav-item').forEach(btn => {
-        btn.addEventListener('click', () => switchTab(btn.dataset.tab));
-      });
-
-      // Counter date nav
-      $('cPrev').addEventListener('click', () => { counterDate = addDays(counterDate, -1); $('cDate').value = counterDate; renderCounter(); });
-      $('cNext').addEventListener('click', () => { counterDate = addDays(counterDate, 1); $('cDate').value = counterDate; renderCounter(); });
-      $('cDate').addEventListener('change', () => { counterDate = $('cDate').value || todayStr(); renderCounter(); });
-      $('cToday').addEventListener('click', () => { counterDate = todayStr(); $('cDate').value = counterDate; renderCounter(); });
-
-      // Counter +/-
-      $('cPlus').addEventListener('click', () => adjustCount(1));
-      $('cMinus').addEventListener('click', () => adjustCount(-1));
-      $('cInput').addEventListener('change', setCountFromInput);
-      $('cInput').addEventListener('input', updateInputWidth);
-      $('cInput').addEventListener('focus', () => $('cInput').select());
-
-      // Period selector
-      $('periodSel').addEventListener('click', e => {
-        const btn = e.target.closest('.period-btn');
-        if (!btn) return;
-        selectedPeriod = btn.dataset.period;
-        renderPeriodSelector();
-        const cr = $('customRange');
-        if (selectedPeriod === 'custom') { cr.classList.add('show'); }
-        else { cr.classList.remove('show'); renderAnalytics(); }
-      });
-      $('anStart').addEventListener('change', () => { if (selectedPeriod === 'custom') renderAnalytics(); });
-      $('anEnd').addEventListener('change', () => { if (selectedPeriod === 'custom') renderAnalytics(); });
-
-      // Save record
-      $('saveRecBtn').addEventListener('click', saveRecord);
-
-      // Save category
-      $('saveCatBtn').addEventListener('click', saveCategory);
-
-      // Modal closes
-      document.querySelectorAll('.modal-close').forEach(btn => {
-        btn.addEventListener('click', () => hideModal(btn.dataset.modal));
-      });
-      document.querySelectorAll('.modal-overlay').forEach(ov => {
-        ov.addEventListener('click', e => { if (e.target === ov) hideModal(ov.id); });
-      });
-
-      // Confirm
-      $('confirmYes').addEventListener('click', () => { hideModal('confirmModal'); if (confirmResolve) confirmResolve(true); });
-      $('confirmNo').addEventListener('click', () => { hideModal('confirmModal'); if (confirmResolve) confirmResolve(false); });
-
-      // Export / Import
-      $('exportBtn').addEventListener('click', exportData);
-      $('importBtn').addEventListener('click', () => $('importFile').click());
-      $('importFile').addEventListener('change', e => { if (e.target.files[0]) importData(e.target.files[0]); e.target.value = ''; });
     }
 
     init();
