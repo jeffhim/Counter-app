@@ -70,6 +70,10 @@
     .header-date{font-size:12px;color:var(--text-sec);font-weight:500}
     .sign-out-btn{background:none;border:none;color:var(--text-ter);font-size:16px;cursor:pointer;padding:6px;border-radius:50%;transition:color .2s,background .2s;display:flex;align-items:center;justify-content:center}
     .sign-out-btn:hover{color:var(--danger);background:var(--danger-light)}
+    .sync-indicator{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--accent);font-weight:600;opacity:0;transition:opacity .3s;white-space:nowrap}
+    .sync-indicator.show{opacity:1}
+    .sync-indicator.saving{color:var(--text-ter)}
+    .sync-indicator i{font-size:10px}
 
     /* Tabs */
     .tab-content{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
@@ -245,6 +249,7 @@
     <header class="app-header">
       <h1>Jeff's Dietetic Case Record</h1>
       <div class="header-right">
+        <span class="sync-indicator" id="syncIndicator"><i class="fas fa-cloud"></i> <span id="syncText">Saved</span></span>
         <span class="header-date" id="headerDate"></span>
         <button class="sign-out-btn" id="signOutBtn" title="Sign out"><i class="fas fa-sign-out-alt"></i></button>
       </div>
@@ -526,9 +531,11 @@
       return snap.exists ? snap.data().count : 0;
     }
     async function setCount(date, count) {
+      showSyncStatus('saving');
       if (usingMemory) {
         mem.dailyCounts = mem.dailyCounts.filter(c => c.date !== date);
         if (count > 0) mem.dailyCounts.push({ date, count });
+        showSyncStatus('saved');
         return;
       }
       if (count <= 0) {
@@ -536,6 +543,7 @@
       } else {
         await firestore.collection('dailyCounts').doc(date).set({ date, count });
       }
+      showSyncStatus('saved');
     }
     async function getCountsRange(start, end) {
       if (usingMemory) return mem.dailyCounts.filter(c => c.date >= start && c.date <= end);
@@ -551,13 +559,17 @@
 
     /* Records */
     async function addRecord(rec) {
-      if (usingMemory) { rec.id = String(mem.nextId++); mem.records.push(rec); return rec.id; }
+      showSyncStatus('saving');
+      if (usingMemory) { rec.id = String(mem.nextId++); mem.records.push(rec); showSyncStatus('saved'); return rec.id; }
       const ref = await firestore.collection('records').add(rec);
+      showSyncStatus('saved');
       return ref.id;
     }
     async function deleteRecord(id) {
-      if (usingMemory) { mem.records = mem.records.filter(r => r.id !== id); return; }
+      showSyncStatus('saving');
+      if (usingMemory) { mem.records = mem.records.filter(r => r.id !== id); showSyncStatus('saved'); return; }
       await firestore.collection('records').doc(id).delete();
+      showSyncStatus('saved');
     }
     async function getRecordsByCat(cat, startD, endD) {
       let all;
@@ -594,17 +606,23 @@
       return snap.docs.map(d => ({ id: d.id, ...d.data() }));
     }
     async function addCategory(cat) {
-      if (usingMemory) { cat.id = String(mem.nextId++); mem.categories.push(cat); return cat.id; }
+      showSyncStatus('saving');
+      if (usingMemory) { cat.id = String(mem.nextId++); mem.categories.push(cat); showSyncStatus('saved'); return cat.id; }
       const ref = await firestore.collection('categories').add({ name: cat.name, color: cat.color });
+      showSyncStatus('saved');
       return ref.id;
     }
     async function updateCategory(cat) {
-      if (usingMemory) { const i = mem.categories.findIndex(c => c.id === cat.id); if (i >= 0) mem.categories[i] = cat; return; }
+      showSyncStatus('saving');
+      if (usingMemory) { const i = mem.categories.findIndex(c => c.id === cat.id); if (i >= 0) mem.categories[i] = cat; showSyncStatus('saved'); return; }
       await firestore.collection('categories').doc(cat.id).set({ name: cat.name, color: cat.color });
+      showSyncStatus('saved');
     }
     async function deleteCategoryDB(id) {
-      if (usingMemory) { mem.categories = mem.categories.filter(c => c.id !== id); return; }
+      showSyncStatus('saving');
+      if (usingMemory) { mem.categories = mem.categories.filter(c => c.id !== id); showSyncStatus('saved'); return; }
       await firestore.collection('categories').doc(id).delete();
+      showSyncStatus('saved');
     }
     async function clearAllData() {
       if (usingMemory) { mem.dailyCounts = []; mem.records = []; mem.categories = []; return; }
@@ -650,6 +668,34 @@
     function $(id) { return document.getElementById(id); }
     function escHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
     function showToast(msg) { const t = $('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000); }
+
+    /* Cloud sync indicator */
+    let syncTimer = null;
+    function showSyncStatus(status) {
+      const el = $('syncIndicator');
+      const txt = $('syncText');
+      if (!el || !txt) return;
+      el.classList.remove('saving');
+      if (status === 'saving') {
+        txt.textContent = 'Saving...';
+        el.querySelector('i').className = 'fas fa-cloud-upload-alt';
+        el.classList.add('saving');
+      } else {
+        txt.textContent = 'Saved';
+        el.querySelector('i').className = 'fas fa-cloud';
+      }
+      el.classList.add('show');
+      clearTimeout(syncTimer);
+      if (status === 'saved') {
+        syncTimer = setTimeout(() => el.classList.remove('show'), 2500);
+      }
+    }
+
+    /* Debounce helper */
+    function debounce(fn, ms) {
+      let timer;
+      return function(...args) { clearTimeout(timer); timer = setTimeout(() => fn.apply(this, args), ms); };
+    }
     function showModal(id) { $(id).classList.add('show'); }
     function hideModal(id) { $(id).classList.remove('show'); }
     function showConfirm(msg) {
@@ -1064,8 +1110,8 @@
     // Counter +/-
     $('cPlus').addEventListener('click', () => adjustCount(1));
     $('cMinus').addEventListener('click', () => adjustCount(-1));
-    $('cInput').addEventListener('change', setCountFromInput);
-    $('cInput').addEventListener('input', updateInputWidth);
+    const debouncedSaveCount = debounce(setCountFromInput, 600);
+    $('cInput').addEventListener('input', () => { updateInputWidth(); debouncedSaveCount(); });
     $('cInput').addEventListener('focus', () => $('cInput').select());
 
     // Period selector
