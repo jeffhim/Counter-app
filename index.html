@@ -23,6 +23,7 @@
       --primary-light: rgba(184,92,47,0.10);
       --accent: #2d7a54; --accent-light: rgba(45,122,84,0.10);
       --danger: #c44040; --danger-light: rgba(196,64,64,0.08);
+      --warn: #d49520; --warn-light: rgba(212,149,32,0.10);
       --border: #e0d8ce;
       --shadow: 0 2px 14px rgba(42,37,32,0.06);
       --shadow-lg: 0 8px 32px rgba(42,37,32,0.12);
@@ -38,6 +39,7 @@
       --primary-light: rgba(212,133,72,0.12);
       --accent: #4cb880; --accent-light: rgba(76,184,128,0.12);
       --danger: #e06060; --danger-light: rgba(224,96,96,0.10);
+      --warn: #e0a830; --warn-light: rgba(224,168,48,0.12);
       --border: #28283a;
       --shadow: 0 2px 14px rgba(0,0,0,0.22);
       --shadow-lg: 0 8px 32px rgba(0,0,0,0.35);
@@ -128,6 +130,19 @@
     .week-bar{height:100%;background:linear-gradient(90deg,var(--primary),var(--primary-hover));border-radius:5px;transition:width .5s ease;min-width:0}
     .week-count{width:24px;text-align:right;font-size:12px;font-weight:700;color:var(--text);font-family:'Fraunces',serif}
 
+    /* ===== FU ALERT BANNER ===== */
+    .fu-alert-banner{background:var(--warn-light);border:1.5px solid var(--warn);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:14px;animation:fadeIn .3s ease}
+    .fu-alert-header{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:13px;font-weight:700;color:var(--warn)}
+    .fu-alert-header i{font-size:15px}
+    .fu-alert-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid rgba(212,149,32,0.15)}
+    .fu-alert-item:first-child{border-top:none;padding-top:0}
+    .fu-alert-case{font-size:13px;font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .fu-alert-date{font-size:11px;font-weight:600;color:var(--warn);white-space:nowrap}
+    .fu-alert-date.overdue{color:var(--danger)}
+    .fu-alert-cat{font-size:10px;color:var(--text-sec);white-space:nowrap}
+    .fu-alert-dismiss{background:none;border:none;color:var(--text-ter);font-size:12px;cursor:pointer;padding:4px;border-radius:4px;flex-shrink:0;transition:color .2s}
+    .fu-alert-dismiss:hover{color:var(--text)}
+
     /* ===== RECORDS TAB ===== */
     .section-hdr{font-size:12px;font-weight:700;color:var(--text-sec);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
     .cat-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
@@ -155,14 +170,19 @@
     .range-clear:hover{border-color:var(--primary);color:var(--primary)}
     .rec-count-badge{font-size:12px;color:var(--text-ter);font-weight:400}
 
-    .rec-card{background:var(--bg-card);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:6px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow)}
+    .rec-card{background:var(--bg-card);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:6px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow);cursor:pointer;transition:background .15s}
+    .rec-card:hover{background:var(--bg-input)}
     .rec-color-bar{width:3px;height:32px;border-radius:2px;flex-shrink:0}
     .rec-info{flex:1;min-width:0}
     .rec-num{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .rec-meta{font-size:11px;color:var(--text-sec);margin-top:1px}
+    .rec-meta{font-size:11px;color:var(--text-sec);margin-top:1px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+    .rec-fu-badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:600;color:var(--warn);background:var(--warn-light);padding:1px 6px;border-radius:6px}
+    .rec-fu-badge.overdue{color:var(--danger);background:var(--danger-light)}
     .rec-note{font-size:11px;color:var(--text-ter);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .rec-del{background:none;border:none;color:var(--text-ter);font-size:14px;cursor:pointer;padding:6px;border-radius:6px;transition:color .2s,background .2s;flex-shrink:0}
-    .rec-del:hover{color:var(--danger);background:var(--danger-light)}
+    .rec-actions{display:flex;gap:2px;flex-shrink:0}
+    .rec-act-btn{background:none;border:none;color:var(--text-ter);font-size:13px;cursor:pointer;padding:6px;border-radius:6px;transition:color .2s,background .2s;flex-shrink:0}
+    .rec-act-btn:hover{background:var(--bg-input);color:var(--text)}
+    .rec-act-btn.del:hover{color:var(--danger);background:var(--danger-light)}
 
     /* Active/Inactive status toggle */
     .status-toggle{display:flex;gap:0;border-radius:var(--radius-sm);overflow:hidden;border:1.5px solid var(--border)}
@@ -201,6 +221,19 @@
     .chart-card{background:var(--bg-card);border-radius:var(--radius);padding:16px 14px;margin-bottom:14px;box-shadow:var(--shadow)}
     .chart-card h3{font-size:13px;font-weight:700;margin-bottom:12px}
     .chart-wrap{position:relative;height:200px}
+
+    /* Period navigation (swipe) */
+    .period-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:16px;user-select:none}
+    .period-nav-btn{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);background:var(--bg-card);color:var(--text);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+    .period-nav-btn:hover{border-color:var(--primary);color:var(--primary)}
+    .period-nav-btn:active{transform:scale(0.9)}
+    .period-nav-btn:disabled{opacity:0.25;cursor:default;pointer-events:none}
+    .period-nav-label{font-size:14px;font-weight:700;color:var(--text);min-width:130px;text-align:center;line-height:1.3}
+    .period-nav-sub{display:block;font-size:11px;font-weight:500;color:var(--text-sec)}
+    .an-slide-left{animation:anSlideL .25s ease}
+    .an-slide-right{animation:anSlideR .25s ease}
+    @keyframes anSlideL{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+    @keyframes anSlideR{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:translateX(0)}}
 
     .data-section{border-top:1px solid var(--border);padding-top:18px;margin-top:8px}
     .data-section h3{font-size:12px;font-weight:700;color:var(--text-sec);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px}
@@ -277,6 +310,7 @@
       <!-- COUNTER -->
       <div id="tab-counter" class="tab-pane active">
         <div id="storageWarn"></div>
+        <div id="fuAlertCounter"></div>
         <div class="counter-date-row">
           <button id="cPrev"><i class="fas fa-chevron-left"></i></button>
           <input type="date" class="counter-date-input" id="cDate">
@@ -301,6 +335,7 @@
 
       <!-- RECORDS -->
       <div id="tab-records" class="tab-pane">
+        <div id="fuAlertRecords"></div>
         <div class="section-hdr">Categories</div>
         <div class="cat-grid" id="catGrid"></div>
         <div id="recPanel"></div>
@@ -314,6 +349,12 @@
           <span>to</span>
           <input type="date" id="anEnd">
         </div>
+        <div class="period-nav" id="periodNav">
+          <button class="period-nav-btn" id="periodPrev"><i class="fas fa-chevron-left"></i></button>
+          <span class="period-nav-label" id="periodLabel">This Week</span>
+          <button class="period-nav-btn" id="periodNext" disabled><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div id="anContent">
         <div class="stats-grid" id="statsGrid"></div>
         <div class="chart-card">
           <h3>Daily Cases</h3>
@@ -327,6 +368,7 @@
           </div>
           <input type="file" id="importFile" accept=".json" class="hidden-file">
         </div>
+        </div>
       </div>
     </main>
 
@@ -337,11 +379,11 @@
     </nav>
   </div>
 
-  <!-- Add Record Modal -->
+  <!-- Add/Edit Record Modal -->
   <div id="recModal" class="modal-overlay">
     <div class="modal">
       <div class="modal-header">
-        <h2>Add Record</h2>
+        <h2 id="recModalTitle">Add Record</h2>
         <button class="modal-close" data-modal="recModal"><i class="fas fa-times"></i></button>
       </div>
       <div class="modal-body">
@@ -359,6 +401,10 @@
             <button type="button" class="status-opt sel-active" data-val="active"><span class="status-dot-s dot-active"></span> Active</button>
             <button type="button" class="status-opt" data-val="inactive"><span class="status-dot-s dot-inactive"></span> Inactive</button>
           </div>
+        </div>
+        <div class="form-group">
+          <label>Next Follow-Up Date (optional)</label>
+          <input type="date" class="form-input" id="recFuDateInput">
         </div>
         <div class="form-group">
           <label>Note (optional)</label>
@@ -485,15 +531,12 @@
           showLoginError('Access denied. Only ' + ALLOWED_EMAIL + ' can use this app. You signed in as ' + email);
           return;
         }
-        // Auth state listener will handle showing the app
       } catch (err) {
         showLoginLoading(false);
         if (err.code === 'auth/popup-closed-by-user') {
-          // User closed the popup, no error needed
           return;
         }
         if (err.code === 'auth/popup-blocked') {
-          // Try redirect as fallback
           try {
             const provider = new firebase.auth.GoogleAuthProvider();
             provider.setCustomParameters({ prompt: 'select_account' });
@@ -517,35 +560,29 @@
       hideLoginError();
     }
 
-    // Listen for auth state changes
     if (auth) {
       auth.onAuthStateChanged(async (user) => {
         if (user && user.email.toLowerCase() === ALLOWED_EMAIL.toLowerCase()) {
-          // Authorized — show app
           document.getElementById('loginScreen').classList.add('hidden');
           document.getElementById('app').style.display = '';
           await initApp();
         } else if (user) {
-          // Wrong account — sign out
           await auth.signOut();
           showLoginLoading(false);
           showLoginError('Access denied. Only ' + ALLOWED_EMAIL + ' can use this app.');
         } else {
-          // Not signed in — show login
           document.getElementById('app').style.display = 'none';
           document.getElementById('loginScreen').classList.remove('hidden');
           showLoginLoading(false);
         }
       });
     } else {
-      // Firebase not available — skip auth, use memory mode
       document.getElementById('loginScreen').classList.add('hidden');
       document.getElementById('app').style.display = '';
       usingMemory = true;
       initApp();
     }
 
-    // Bind sign-in button
     document.getElementById('googleSignInBtn').addEventListener('click', signInWithGoogle);
     document.getElementById('signOutBtn').addEventListener('click', signOutUser);
 
@@ -591,6 +628,17 @@
       const ref = await firestore.collection('records').add(rec);
       showSyncStatus('saved');
       return ref.id;
+    }
+    async function updateRecord(id, data) {
+      showSyncStatus('saving');
+      if (usingMemory) {
+        const idx = mem.records.findIndex(r => r.id === id);
+        if (idx >= 0) Object.assign(mem.records[idx], data);
+        showSyncStatus('saved');
+        return;
+      }
+      await firestore.collection('records').doc(id).update(data);
+      showSyncStatus('saved');
     }
     async function deleteRecord(id) {
       showSyncStatus('saving');
@@ -663,7 +711,8 @@
     let categories = [];
     let currentTab = 'counter';
     let counterDate = todayStr();
-    let selectedPeriod = 'week';
+    let selectedPeriod = 'weekMF';
+    let periodOffset = 0;
     let selectedCatId = null;
     let editingCatId = null;
     let selectedCatColor = COLORS[0];
@@ -673,6 +722,7 @@
     let confirmResolve = null;
     let appInitialized = false;
     let recStatus = 'active';
+    let editingRecId = null; // null = adding, string = editing
 
     /* ===== DATE HELPERS ===== */
     function todayStr() { return new Date().toISOString().split('T')[0]; }
@@ -681,18 +731,65 @@
     function addDays(d, n) { const dt = new Date(d + 'T12:00:00'); dt.setDate(dt.getDate() + n); return dt.toISOString().split('T')[0]; }
     function getWeekStart(d) { const dow = new Date(d + 'T12:00:00').getDay(); return addDays(d, -(dow === 0 ? 6 : dow - 1)); }
     function daysBetween(s, e) { const a = []; let c = s; while (c <= e) { a.push(c); c = addDays(c, 1); } return a; }
-    function getRange(p) {
+    function diffDays(a, b) {
+      const d1 = new Date(a + 'T12:00:00');
+      const d2 = new Date(b + 'T12:00:00');
+      return Math.round((d1 - d2) / 86400000);
+    }
+    function getRange(p, offset) {
+      offset = offset || 0;
       const t = todayStr();
       const ws = getWeekStart(t);
       switch (p) {
-        case 'week': return { start: ws, end: addDays(ws, 6) };
-        case 'weekMF': return { start: ws, end: addDays(ws, 4) }; // Mon-Fri
-        case 'weekMS': return { start: ws, end: addDays(ws, 5) }; // Mon-Sat
-        case 'month': return { start: t.slice(0, 8) + '01', end: t };
-        case '30days': return { start: addDays(t, -29), end: t };
-        case 'year': return { start: t.slice(0, 5) + '01-01', end: t };
+        case 'week': {
+          const s = addDays(ws, offset * 7);
+          return { start: s, end: addDays(s, 6) };
+        }
+        case 'weekMF': {
+          const s = addDays(ws, offset * 7);
+          return { start: s, end: addDays(s, 4) };
+        }
+        case 'weekMS': {
+          const s = addDays(ws, offset * 7);
+          return { start: s, end: addDays(s, 5) };
+        }
+        case 'month': {
+          const d = new Date(t + 'T12:00:00');
+          d.setMonth(d.getMonth() + offset);
+          const yr = d.getFullYear();
+          const mo = String(d.getMonth() + 1).padStart(2, '0');
+          const start = yr + '-' + mo + '-01';
+          if (offset === 0) return { start, end: t };
+          const lastDay = new Date(yr, d.getMonth() + 1, 0).getDate();
+          return { start, end: yr + '-' + mo + '-' + String(lastDay).padStart(2, '0') };
+        }
+        case '30days': {
+          const end = addDays(t, offset * 30);
+          return { start: addDays(end, -29), end };
+        }
+        case 'year': {
+          const yr = new Date(t + 'T12:00:00').getFullYear() + offset;
+          const start = yr + '-01-01';
+          if (offset === 0) return { start, end: t };
+          return { start, end: yr + '-12-31' };
+        }
         default: return { start: t, end: t };
       }
+    }
+
+    function getPeriodLabel(p, off) {
+      if (p === 'custom') return 'Custom Range';
+      const range = getRange(p, off);
+      const dateSub = fmtShort(range.start) + ' \u2013 ' + fmtShort(range.end);
+      if (off === 0) {
+        const m = { week: 'This Week', weekMF: 'This Week', weekMS: 'This Week', month: 'This Month', '30days': 'Last 30 Days', year: String(new Date().getFullYear()) };
+        return '<span>' + (m[p] || '') + '</span><span class="period-nav-sub">' + dateSub + '</span>';
+      }
+      if (off === -1 && (p === 'week' || p === 'weekMF' || p === 'weekMS')) return '<span>Last Week</span><span class="period-nav-sub">' + dateSub + '</span>';
+      if (off === -1 && p === 'month') return '<span>Last Month</span><span class="period-nav-sub">' + dateSub + '</span>';
+      if (p === 'year') return '<span>' + (new Date().getFullYear() + off) + '</span><span class="period-nav-sub">' + dateSub + '</span>';
+      if (off === -2 && (p === 'week' || p === 'weekMF' || p === 'weekMS')) return '<span>2 Weeks Ago</span><span class="period-nav-sub">' + dateSub + '</span>';
+      return '<span>' + dateSub + '</span>';
     }
 
     /* ===== UTILS ===== */
@@ -746,6 +843,63 @@
       setTimeout(() => el.remove(), 800);
     }
 
+    /* ===== FU ALERT SYSTEM ===== */
+    async function renderFuAlerts() {
+      const allRecs = await getAllRecords();
+      const today = todayStr();
+      const in14 = addDays(today, 14);
+      const cats = await getCategories();
+      const catMap = {};
+      cats.forEach(c => { catMap[c.name] = c; });
+
+      // Find records with fuDate within the next 2 weeks (or overdue)
+      const fuRecs = allRecs.filter(r => {
+        if (!r.fuDate) return false;
+        if (r.status === 'inactive') return false;
+        return r.fuDate <= in14;
+      }).sort((a, b) => a.fuDate.localeCompare(b.fuDate));
+
+      const html = fuRecs.length === 0 ? '' : buildFuAlertHTML(fuRecs, today, catMap);
+      const counterEl = $('fuAlertCounter');
+      const recordsEl = $('fuAlertRecords');
+      if (counterEl) counterEl.innerHTML = html;
+      if (recordsEl) recordsEl.innerHTML = html;
+    }
+
+    function buildFuAlertHTML(fuRecs, today, catMap) {
+      const items = fuRecs.map(r => {
+        const diff = diffDays(r.fuDate, today);
+        let label, cls;
+        if (diff < 0) {
+          label = Math.abs(diff) + 'd overdue';
+          cls = 'overdue';
+        } else if (diff === 0) {
+          label = 'Today';
+          cls = 'overdue';
+        } else if (diff === 1) {
+          label = 'Tomorrow';
+          cls = '';
+        } else {
+          label = fmtShort(r.fuDate);
+          cls = '';
+        }
+        const catColor = catMap[r.category] ? catMap[r.category].color : '#999';
+        return '<div class="fu-alert-item">'
+          + '<span style="width:4px;height:22px;border-radius:2px;background:' + catColor + ';flex-shrink:0"></span>'
+          + '<div style="flex:1;min-width:0">'
+          + '<div class="fu-alert-case">' + escHtml(r.caseNum || '(no ref)') + '</div>'
+          + '<div class="fu-alert-cat">' + escHtml(r.category) + '</div>'
+          + '</div>'
+          + '<span class="fu-alert-date ' + cls + '"><i class="fas fa-calendar-check" style="margin-right:3px;font-size:9px"></i>' + label + '</span>'
+          + '</div>';
+      }).join('');
+
+      return '<div class="fu-alert-banner">'
+        + '<div class="fu-alert-header"><i class="fas fa-bell"></i> ' + fuRecs.length + ' Follow-Up' + (fuRecs.length !== 1 ? 's' : '') + ' Coming Up</div>'
+        + items
+        + '</div>';
+    }
+
     /* ===== NAVIGATION ===== */
     function switchTab(tab) {
       currentTab = tab;
@@ -771,6 +925,7 @@
       $('cLabel').textContent = isToday ? 'today' : 'on ' + fmtShort(counterDate);
 
       await renderWeekSummary();
+      renderFuAlerts();
     }
 
     function updateInputWidth() {
@@ -786,7 +941,6 @@
       $('cInput').value = next;
       updateInputWidth();
 
-      // Animate
       const input = $('cInput');
       input.classList.remove('pop');
       void input.offsetWidth;
@@ -825,12 +979,12 @@
         const pct = maxC > 0 ? (cnt / maxC * 100) : 0;
         const isSel = d === counterDate;
         const dayNum = d.split('-')[2];
-        return `<div class="week-row ${isSel ? 'is-selected' : ''}">
-          <span class="week-day">${DAY_NAMES[i]}</span>
-          <span class="week-date">${dayNum}</span>
-          <div class="week-bar-bg"><div class="week-bar" style="width:${pct}%"></div></div>
-          <span class="week-count">${cnt || '\u2013'}</span>
-        </div>`;
+        return '<div class="week-row ' + (isSel ? 'is-selected' : '') + '">'
+          + '<span class="week-day">' + DAY_NAMES[i] + '</span>'
+          + '<span class="week-date">' + dayNum + '</span>'
+          + '<div class="week-bar-bg"><div class="week-bar" style="width:' + pct + '%"></div></div>'
+          + '<span class="week-count">' + (cnt || '\u2013') + '</span>'
+          + '</div>';
       }).join('');
     }
 
@@ -839,22 +993,21 @@
        ================================================================ */
     async function renderRecordsTab() {
       categories = await getCategories();
+      renderFuAlerts();
       const grid = $('catGrid');
 
-      // Build category cards
       let html = '';
       for (const c of categories) {
         const cnt = await countRecordsByCat(c.name);
         const sel = selectedCatId === c.id ? 'selected' : '';
-        html += `<div class="cat-card ${sel}" data-id="${c.id}">
-          <span class="cat-card-dot" style="background:${c.color}"></span>
-          ${escHtml(c.name)}<span class="cat-card-count">${cnt}</span>
-        </div>`;
+        html += '<div class="cat-card ' + sel + '" data-id="' + c.id + '">'
+          + '<span class="cat-card-dot" style="background:' + c.color + '"></span>'
+          + escHtml(c.name) + '<span class="cat-card-count">' + cnt + '</span>'
+          + '</div>';
       }
       html += '<button class="add-cat-chip" id="addCatChip"><i class="fas fa-plus"></i> Add</button>';
       grid.innerHTML = html;
 
-      // Bind category card clicks
       grid.querySelectorAll('.cat-card').forEach(card => {
         card.addEventListener('click', () => {
           const id = card.dataset.id;
@@ -865,7 +1018,6 @@
       const addBtn = $('addCatChip');
       if (addBtn) addBtn.addEventListener('click', showAddCategoryModal);
 
-      // Records panel
       const panel = $('recPanel');
       if (!selectedCatId) {
         panel.innerHTML = categories.length === 0
@@ -878,34 +1030,32 @@
       if (!cat) { panel.innerHTML = ''; return; }
       const recs = await getRecordsByCat(cat.name, recFilterFrom || null, recFilterTo || null);
 
-      panel.innerHTML = `
-        <div class="records-panel">
-          <div class="rec-panel-header">
-            <div class="rec-panel-title">
-              <span class="cat-dot" style="background:${cat.color}"></span>
-              ${escHtml(cat.name)}
-              <span class="rec-count-badge">(${recs.length} record${recs.length !== 1 ? 's' : ''})</span>
-            </div>
-            <div class="rec-panel-actions">
-              <button id="editCatBtn" title="Edit category"><i class="fas fa-pen"></i></button>
-              <button id="delCatBtn" class="del" title="Delete category"><i class="fas fa-trash-alt"></i></button>
-            </div>
-          </div>
-          <div class="range-row">
-            <label>From</label>
-            <input type="date" class="range-input" id="rFrom" value="${recFilterFrom}">
-            <label>To</label>
-            <input type="date" class="range-input" id="rTo" value="${recFilterTo}">
-            <button class="range-clear" id="rClear">All</button>
-          </div>
-          <div id="recList">${recs.length === 0
-            ? '<div class="empty-state" style="padding:24px 0"><i class="fas fa-folder-open"></i><p>No records yet' + (recFilterFrom || recFilterTo ? ' in this range' : '') + '.</p></div>'
-            : recs.map(r => recCardHTML(r, cat.color)).join('')
-          }</div>
-          <button class="add-rec-btn" id="addRecBtn"><i class="fas fa-plus"></i> Add Record</button>
-        </div>`;
+      panel.innerHTML =
+        '<div class="records-panel">'
+        + '<div class="rec-panel-header">'
+        + '<div class="rec-panel-title">'
+        + '<span class="cat-dot" style="background:' + cat.color + '"></span>'
+        + escHtml(cat.name)
+        + '<span class="rec-count-badge">(' + recs.length + ' record' + (recs.length !== 1 ? 's' : '') + ')</span>'
+        + '</div>'
+        + '<div class="rec-panel-actions">'
+        + '<button id="editCatBtn" title="Edit category"><i class="fas fa-pen"></i></button>'
+        + '<button id="delCatBtn" class="del" title="Delete category"><i class="fas fa-trash-alt"></i></button>'
+        + '</div></div>'
+        + '<div class="range-row">'
+        + '<label>From</label>'
+        + '<input type="date" class="range-input" id="rFrom" value="' + recFilterFrom + '">'
+        + '<label>To</label>'
+        + '<input type="date" class="range-input" id="rTo" value="' + recFilterTo + '">'
+        + '<button class="range-clear" id="rClear">All</button>'
+        + '</div>'
+        + '<div id="recList">' + (recs.length === 0
+          ? '<div class="empty-state" style="padding:24px 0"><i class="fas fa-folder-open"></i><p>No records yet' + (recFilterFrom || recFilterTo ? ' in this range' : '') + '.</p></div>'
+          : recs.map(r => recCardHTML(r, cat.color)).join(''))
+        + '</div>'
+        + '<button class="add-rec-btn" id="addRecBtn"><i class="fas fa-plus"></i> Add Record</button>'
+        + '</div>';
 
-      // Bind panel events
       $('editCatBtn').addEventListener('click', () => editCategoryModal(cat));
       $('delCatBtn').addEventListener('click', () => deleteCategoryPrompt(cat));
       $('rFrom').addEventListener('change', e => { recFilterFrom = e.target.value; renderRecordsTab(); });
@@ -913,14 +1063,32 @@
       $('rClear').addEventListener('click', () => { recFilterFrom = ''; recFilterTo = ''; renderRecordsTab(); });
       $('addRecBtn').addEventListener('click', showAddRecordModal);
 
-      // Bind delete buttons on record cards
-      $('recList').querySelectorAll('.rec-del').forEach(btn => {
-        btn.addEventListener('click', async () => {
+      // Bind edit buttons
+      $('recList').querySelectorAll('.rec-edit-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const rec = recs.find(r => r.id === btn.dataset.id);
+          if (rec) showEditRecordModal(rec);
+        });
+      });
+
+      // Bind delete buttons
+      $('recList').querySelectorAll('.rec-del-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          e.stopPropagation();
           const ok = await showConfirm('Remove this record?');
           if (!ok) return;
           await deleteRecord(btn.dataset.id);
           showToast('Record removed');
           renderRecordsTab();
+        });
+      });
+
+      // Tap on card to edit
+      $('recList').querySelectorAll('.rec-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const rec = recs.find(r => r.id === card.dataset.recid);
+          if (rec) showEditRecordModal(rec);
         });
       });
     }
@@ -930,25 +1098,59 @@
       const statusCls = isActive ? 'is-active' : 'is-inactive';
       const statusLabel = isActive ? 'Active' : 'Inactive';
       const dotColor = isActive ? '#2daa6e' : '#a0a0a0';
-      return `<div class="rec-card">
-        <div class="rec-color-bar" style="background:${color}"></div>
-        <div class="rec-info">
-          <div class="rec-num">${escHtml(r.caseNum || '(no reference)')}</div>
-          <div class="rec-meta">${fmtShort(r.date)}</div>
-          ${r.note ? '<div class="rec-note">' + escHtml(r.note) + '</div>' : ''}
-        </div>
-        <span class="rec-status ${statusCls}"><span style="width:6px;height:6px;border-radius:50%;background:${dotColor};display:inline-block"></span>${statusLabel}</span>
-        <button class="rec-del" data-id="${r.id}" title="Delete"><i class="fas fa-trash-alt"></i></button>
-      </div>`;
+      const today = todayStr();
+
+      let fuHtml = '';
+      if (r.fuDate) {
+        const diff = diffDays(r.fuDate, today);
+        let fuLabel, fuCls;
+        if (diff < 0) { fuLabel = 'FU ' + Math.abs(diff) + 'd overdue'; fuCls = 'overdue'; }
+        else if (diff === 0) { fuLabel = 'FU Today'; fuCls = 'overdue'; }
+        else if (diff === 1) { fuLabel = 'FU Tomorrow'; fuCls = ''; }
+        else { fuLabel = 'FU ' + fmtShort(r.fuDate); fuCls = ''; }
+        fuHtml = '<span class="rec-fu-badge ' + fuCls + '"><i class="fas fa-calendar-check"></i>' + fuLabel + '</span>';
+      }
+
+      return '<div class="rec-card" data-recid="' + r.id + '">'
+        + '<div class="rec-color-bar" style="background:' + color + '"></div>'
+        + '<div class="rec-info">'
+        + '<div class="rec-num">' + escHtml(r.caseNum || '(no reference)') + '</div>'
+        + '<div class="rec-meta"><span>' + fmtShort(r.date) + '</span>' + fuHtml + '</div>'
+        + (r.note ? '<div class="rec-note">' + escHtml(r.note) + '</div>' : '')
+        + '</div>'
+        + '<span class="rec-status ' + statusCls + '"><span style="width:6px;height:6px;border-radius:50%;background:' + dotColor + ';display:inline-block"></span>' + statusLabel + '</span>'
+        + '<div class="rec-actions">'
+        + '<button class="rec-act-btn rec-edit-btn" data-id="' + r.id + '" title="Edit"><i class="fas fa-pen"></i></button>'
+        + '<button class="rec-act-btn del rec-del-btn" data-id="' + r.id + '" title="Delete"><i class="fas fa-trash-alt"></i></button>'
+        + '</div>'
+        + '</div>';
     }
 
     /* ===== RECORD MODAL ===== */
     function showAddRecordModal() {
+      editingRecId = null;
+      $('recModalTitle').textContent = 'Add Record';
       $('recNumInput').value = '';
       $('recDateInput').value = todayStr();
+      $('recFuDateInput').value = '';
       $('recNoteInput').value = '';
       recStatus = 'active';
       updateStatusToggle();
+      $('saveRecBtn').textContent = 'Save Record';
+      showModal('recModal');
+      setTimeout(() => $('recNumInput').focus(), 300);
+    }
+
+    function showEditRecordModal(rec) {
+      editingRecId = rec.id;
+      $('recModalTitle').textContent = 'Edit Record';
+      $('recNumInput').value = rec.caseNum || '';
+      $('recDateInput').value = rec.date || todayStr();
+      $('recFuDateInput').value = rec.fuDate || '';
+      $('recNoteInput').value = rec.note || '';
+      recStatus = rec.status || 'active';
+      updateStatusToggle();
+      $('saveRecBtn').textContent = 'Update Record';
       showModal('recModal');
       setTimeout(() => $('recNumInput').focus(), 300);
     }
@@ -968,10 +1170,21 @@
       if (!cat) return;
       const caseNum = $('recNumInput').value.trim();
       const date = $('recDateInput').value || todayStr();
+      const fuDate = $('recFuDateInput').value || '';
       const note = $('recNoteInput').value.trim();
-      await addRecord({ caseNum, category: cat.name, date, note, status: recStatus, createdAt: new Date().toISOString() });
-      hideModal('recModal');
-      showToast('Record saved');
+
+      if (editingRecId) {
+        // Update existing record
+        await updateRecord(editingRecId, { caseNum, date, fuDate, note, status: recStatus });
+        hideModal('recModal');
+        showToast('Record updated');
+      } else {
+        // Add new record
+        await addRecord({ caseNum, category: cat.name, date, fuDate, note, status: recStatus, createdAt: new Date().toISOString() });
+        hideModal('recModal');
+        showToast('Record saved');
+      }
+      editingRecId = null;
       renderRecordsTab();
     }
 
@@ -998,7 +1211,7 @@
     function renderColorGrid() {
       const grid = $('colorGrid');
       grid.innerHTML = COLORS.map(c =>
-        `<div class="color-swatch ${c === selectedCatColor ? 'selected' : ''}" style="background:${c}" data-color="${c}"></div>`
+        '<div class="color-swatch ' + (c === selectedCatColor ? 'selected' : '') + '" style="background:' + c + '" data-color="' + c + '"></div>'
       ).join('');
       grid.querySelectorAll('.color-swatch').forEach(sw => {
         sw.addEventListener('click', () => { selectedCatColor = sw.dataset.color; renderColorGrid(); });
@@ -1013,7 +1226,6 @@
       if (editingCatId) {
         const old = categories.find(c => c.id === editingCatId);
         if (old && old.name !== name) {
-          // Update records with old category name
           const recs = await getRecordsByCat(old.name);
           for (const r of recs) {
             if (!usingMemory) {
@@ -1037,8 +1249,8 @@
     async function deleteCategoryPrompt(cat) {
       const cnt = await countRecordsByCat(cat.name);
       const msg = cnt > 0
-        ? `Delete "${cat.name}" and its ${cnt} record${cnt !== 1 ? 's' : ''}?`
-        : `Delete category "${cat.name}"?`;
+        ? 'Delete "' + cat.name + '" and its ' + cnt + ' record' + (cnt !== 1 ? 's' : '') + '?'
+        : 'Delete category "' + cat.name + '"?';
       const ok = await showConfirm(msg);
       if (!ok) return;
       await deleteRecordsByCat(cat.name);
@@ -1052,13 +1264,30 @@
     /* ================================================================
        ANALYTICS TAB
        ================================================================ */
-    async function renderAnalytics() {
+    async function renderAnalytics(slideDir) {
       let range;
       if (selectedPeriod === 'custom') {
         range = { start: $('anStart').value || todayStr(), end: $('anEnd').value || todayStr() };
       } else {
-        range = getRange(selectedPeriod);
+        range = getRange(selectedPeriod, periodOffset);
       }
+
+      // Update period nav
+      const navEl = $('periodNav');
+      if (navEl) navEl.style.display = selectedPeriod === 'custom' ? 'none' : '';
+      const labelEl = $('periodLabel');
+      if (labelEl) labelEl.innerHTML = getPeriodLabel(selectedPeriod, periodOffset);
+      const nextBtn = $('periodNext');
+      if (nextBtn) nextBtn.disabled = periodOffset >= 0;
+
+      // Slide animation
+      const content = $('anContent');
+      if (content && slideDir) {
+        content.classList.remove('an-slide-left', 'an-slide-right');
+        void content.offsetWidth;
+        content.classList.add(slideDir === 'left' ? 'an-slide-left' : 'an-slide-right');
+      }
+
       const counts = await getCountsRange(range.start, range.end);
       const countMap = {};
       counts.forEach(c => { countMap[c.date] = c.count; });
@@ -1070,10 +1299,10 @@
       let peakDay = '-';
       counts.forEach(c => { if (c.count > peakMax) { peakMax = c.count; peakDay = fmtShort(c.date); } });
 
-      $('statsGrid').innerHTML = `
-        <div class="stat-card"><div class="stat-value">${total}</div><div class="stat-label">Total</div></div>
-        <div class="stat-card"><div class="stat-value">${avg}</div><div class="stat-label">Daily Avg</div></div>
-        <div class="stat-card"><div class="stat-value">${peakMax || 0}</div><div class="stat-label">Peak (${peakDay})</div></div>`;
+      $('statsGrid').innerHTML =
+        '<div class="stat-card"><div class="stat-value">' + total + '</div><div class="stat-label">Total</div></div>'
+        + '<div class="stat-card"><div class="stat-value">' + avg + '</div><div class="stat-label">Daily Avg</div></div>'
+        + '<div class="stat-card"><div class="stat-value">' + (peakMax || 0) + '</div><div class="stat-label">Peak (' + peakDay + ')</div></div>';
 
       const labels = days.map(d => fmtShort(d));
       const data = days.map(d => countMap[d] || 0);
@@ -1104,14 +1333,14 @@
 
     function renderPeriodSelector() {
       $('periodSel').innerHTML = PERIODS.map(p =>
-        `<button class="period-btn ${p.key === selectedPeriod ? 'active' : ''}" data-period="${p.key}">${p.label}</button>`
+        '<button class="period-btn ' + (p.key === selectedPeriod ? 'active' : '') + '" data-period="' + p.key + '">' + p.label + '</button>'
       ).join('');
     }
 
     /* ===== EXPORT / IMPORT ===== */
     async function exportData() {
       const payload = {
-        version: 2,
+        version: 3,
         exportDate: new Date().toISOString(),
         dailyCounts: await getAllCounts(),
         records: await getAllRecords(),
@@ -1136,7 +1365,7 @@
         await clearAllData();
         if (data.categories) for (const c of data.categories) await addCategory({ name: c.name, color: c.color });
         if (data.dailyCounts) for (const c of data.dailyCounts) await setCount(c.date, c.count);
-        if (data.records) for (const r of data.records) await addRecord({ caseNum: r.caseNum, category: r.category, date: r.date, note: r.note, status: r.status || 'active', createdAt: r.createdAt });
+        if (data.records) for (const r of data.records) await addRecord({ caseNum: r.caseNum, category: r.category, date: r.date, fuDate: r.fuDate || '', note: r.note, status: r.status || 'active', createdAt: r.createdAt });
         categories = await getCategories();
         showToast('Imported successfully');
         switchTab(currentTab);
@@ -1167,6 +1396,7 @@
       const btn = e.target.closest('.period-btn');
       if (!btn) return;
       selectedPeriod = btn.dataset.period;
+      periodOffset = 0;
       renderPeriodSelector();
       const cr = $('customRange');
       if (selectedPeriod === 'custom') { cr.classList.add('show'); }
@@ -1174,6 +1404,42 @@
     });
     $('anStart').addEventListener('change', () => { if (selectedPeriod === 'custom') renderAnalytics(); });
     $('anEnd').addEventListener('change', () => { if (selectedPeriod === 'custom') renderAnalytics(); });
+
+    // Period nav arrow buttons
+    $('periodPrev').addEventListener('click', () => {
+      if (selectedPeriod === 'custom') return;
+      periodOffset--;
+      renderAnalytics('right');
+    });
+    $('periodNext').addEventListener('click', () => {
+      if (selectedPeriod === 'custom' || periodOffset >= 0) return;
+      periodOffset++;
+      renderAnalytics('left');
+    });
+
+    // Analytics swipe navigation
+    let anTouchX = 0, anTouchY = 0;
+    $('tab-analytics').addEventListener('touchstart', function(e) {
+      anTouchX = e.touches[0].clientX;
+      anTouchY = e.touches[0].clientY;
+    }, { passive: true });
+    $('tab-analytics').addEventListener('touchend', function(e) {
+      if (selectedPeriod === 'custom') return;
+      const dx = e.changedTouches[0].clientX - anTouchX;
+      const dy = e.changedTouches[0].clientY - anTouchY;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        if (dx > 0) {
+          // Swipe right = previous period
+          periodOffset--;
+          renderAnalytics('right');
+        } else {
+          // Swipe left = next period
+          if (periodOffset >= 0) return;
+          periodOffset++;
+          renderAnalytics('left');
+        }
+      }
+    });
 
     // Status toggle in record modal
     $('recStatusToggle').addEventListener('click', e => {
@@ -1211,16 +1477,14 @@
       if (appInitialized) return;
       appInitialized = true;
 
-      // Set up UI defaults
       $('headerDate').textContent = fmtDate(todayStr());
       $('cDate').value = counterDate;
-      const r = getRange('week');
+      const r = getRange('weekMF');
       $('anStart').value = r.start;
       $('anEnd').value = r.end;
       renderPeriodSelector();
       updateInputWidth();
 
-      // Enable Firestore persistence
       if (firestore) {
         try { await firestore.enablePersistence(); } catch (_e) { /* offline cache may not work */ }
       }
@@ -1230,7 +1494,6 @@
         $('storageWarn').innerHTML = '<div class="storage-warn"><i class="fas fa-exclamation-triangle"></i> Firebase unavailable. Data will be lost on refresh. Use Export to save.</div>';
       }
 
-      // Load data and render
       try {
         categories = await getCategories();
       } catch (_e) {
