@@ -47,7 +47,7 @@
     body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
     #app{height:100%;display:flex;flex-direction:column;max-width:520px;margin:0 auto;position:relative}
 
-    /* Login */
+    /* ===== LOGIN SCREEN ===== */
     .login-screen{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:500;padding:32px;text-align:center}
     .login-screen.hidden{display:none}
     .login-logo{font-family:'Fraunces',serif;font-size:28px;font-weight:900;color:var(--primary);margin-bottom:6px;line-height:1.2}
@@ -80,44 +80,45 @@
     .tab-pane{display:none;padding:16px;padding-bottom:calc(90px + var(--safe-b));animation:fadeIn .25s ease}
     .tab-pane.active{display:block}
     @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+    /* Bottom Nav */
     .bottom-nav{display:flex;background:var(--bg-card);border-top:1px solid var(--border);padding-bottom:var(--safe-b);flex-shrink:0;z-index:20}
     .nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 4px 4px;border:none;background:none;color:var(--text-ter);font-size:10px;font-family:inherit;font-weight:600;cursor:pointer;transition:color .2s}
     .nav-item i{font-size:24px}
     .nav-item.active{color:var(--primary)}
 
-    /* ===== CASES TAB ===== */
-    .date-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px}
-    .date-row button{width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:var(--bg-card);color:var(--text);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0}
-    .date-row button:hover{background:var(--primary-light)}
-    .date-input{font-family:inherit;font-size:16px;font-weight:600;padding:8px 12px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--bg-input);color:var(--text);text-align:center;outline:none;width:auto;transition:border-color .2s}
-    .date-input:focus{border-color:var(--primary)}
+    /* ===== COUNTER TAB ===== */
+    .counter-date-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px}
+    .counter-date-row button{width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:var(--bg-card);color:var(--text);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0}
+    .counter-date-row button:hover{background:var(--primary-light)}
+    .counter-date-input{font-family:inherit;font-size:16px;font-weight:600;padding:8px 12px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--bg-input);color:var(--text);text-align:center;outline:none;width:auto;transition:border-color .2s}
+    .counter-date-input:focus{border-color:var(--primary)}
     .today-pill{padding:6px 12px;border-radius:16px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;font-family:inherit;border:none;cursor:pointer;display:none;flex-shrink:0}
     .today-pill.show{display:inline-flex}
-    .day-summary{text-align:center;margin-bottom:14px}
-    .day-count{font-family:'Fraunces',serif;font-size:36px;font-weight:900;color:var(--primary);line-height:1}
-    .day-label{font-size:12px;color:var(--text-sec);margin-top:2px}
 
-    .case-card{background:var(--bg-card);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:6px;box-shadow:var(--shadow);cursor:pointer;border:2px solid transparent;transition:border-color .15s}
-    .case-card:active{border-color:var(--primary-light)}
-    .case-top{display:flex;align-items:center;gap:8px}
-    .type-badge{display:inline-flex;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700;letter-spacing:.3px;flex-shrink:0}
-    .case-num{font-weight:700;font-size:14px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .case-del{background:none;border:none;color:var(--text-ter);font-size:13px;cursor:pointer;padding:4px 6px;border-radius:6px;transition:color .2s,background .2s;flex-shrink:0}
-    .case-del:hover{color:var(--danger);background:var(--danger-light)}
-    .case-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
-    .cat-tag{padding:2px 8px;border-radius:8px;font-size:10px;font-weight:600}
-    .case-notes{font-size:11px;color:var(--text-ter);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-    .status-label{font-size:10px;font-weight:700;letter-spacing:.3px;flex-shrink:0}
-    .status-chips{display:flex;flex-wrap:wrap;gap:8px}
-    .status-chip{padding:8px 16px;border-radius:20px;border:2px solid var(--border);background:var(--bg-card);font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:6px}
-    .status-chip .sdot{width:8px;height:8px;border-radius:50%}
-    .status-chip.selected{color:#fff}
-    .add-case-btn{width:100%;padding:12px;border:2px dashed var(--border);border-radius:var(--radius-sm);background:transparent;color:var(--text-sec);font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;margin-top:8px;transition:border-color .2s,color .2s}
-    .add-case-btn:hover{border-color:var(--primary);color:var(--primary)}
-    .add-case-btn i{margin-right:4px}
+    .counter-hero{text-align:center;padding:24px 0 16px}
+    .counter-input-wrap{position:relative;display:inline-block}
+    .counter-input{font-family:'Fraunces',serif;font-size:88px;font-weight:900;color:var(--primary);line-height:1;text-align:center;background:transparent;border:2px solid transparent;border-radius:14px;outline:none;width:3ch;min-width:2ch;transition:border-color .2s,background .2s;-moz-appearance:textfield}
+    .counter-input::-webkit-outer-spin-button,.counter-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+    .counter-input:focus{border-color:var(--primary);background:var(--primary-light)}
+    .counter-label{font-size:13px;color:var(--text-sec);text-transform:uppercase;letter-spacing:3px;font-weight:600;margin-top:4px}
+    .counter-label .counter-date-display{text-transform:none;letter-spacing:0;font-weight:500}
 
-    .week-section{background:var(--bg-card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-top:16px}
+    .counter-controls{display:flex;justify-content:center;gap:40px;padding:4px 0 28px}
+    .ctrl-btn{width:68px;height:68px;border-radius:50%;font-size:30px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .1s;border:none;font-family:inherit}
+    .ctrl-btn:active{transform:scale(0.88)}
+    .ctrl-minus{background:var(--bg-card);border:2px solid var(--border)!important;color:var(--text-sec)}
+    .ctrl-minus:hover{color:var(--danger);border-color:var(--danger)!important}
+    .ctrl-plus{background:var(--primary);color:#fff;box-shadow:0 4px 18px rgba(184,92,47,0.30)}
+    .ctrl-plus:hover{background:var(--primary-hover)}
+
+    .pop{animation:popBounce .3s ease}
+    @keyframes popBounce{0%{transform:scale(1)}40%{transform:scale(1.12)}100%{transform:scale(1)}}
+    .float-plus{position:fixed;font-family:'Fraunces',serif;font-size:26px;font-weight:900;color:var(--accent);pointer-events:none;z-index:200;animation:floatUp .8s ease forwards}
+    @keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-50px) scale(1.15)}}
+
+    /* Week summary */
+    .week-section{background:var(--bg-card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
     .week-title{font-size:12px;font-weight:700;color:var(--text-sec);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px}
     .week-row{display:flex;align-items:center;padding:5px 4px;border-radius:8px;transition:background .2s}
     .week-row.is-selected{background:var(--primary-light)}
@@ -127,38 +128,72 @@
     .week-bar{height:100%;background:linear-gradient(90deg,var(--primary),var(--primary-hover));border-radius:5px;transition:width .5s ease;min-width:0}
     .week-count{width:24px;text-align:right;font-size:12px;font-weight:700;color:var(--text);font-family:'Fraunces',serif}
 
-    /* ===== BROWSE TAB ===== */
-    .section-hdr{font-size:12px;font-weight:700;color:var(--text-sec);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
-    .filter-row{display:flex;align-items:center;gap:6px;margin-bottom:10px;flex-wrap:wrap}
-    .filter-row label{font-size:11px;font-weight:700;color:var(--text-ter);text-transform:uppercase;letter-spacing:.5px}
-    .filter-date{font-family:inherit;font-size:14px;padding:7px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg-input);color:var(--text);outline:none;flex:1;min-width:0;transition:border-color .2s}
-    .filter-date:focus{border-color:var(--primary)}
-    .filter-clear{padding:7px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg-card);color:var(--text-sec);font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s}
-    .filter-clear:hover{border-color:var(--primary);color:var(--primary)}
-    .chip-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-    .filter-chip{padding:6px 12px;border-radius:16px;border:1.5px solid var(--border);background:var(--bg-card);font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s;color:var(--text-sec)}
-    .filter-chip.active{color:#fff}
-    .result-count{font-size:12px;color:var(--text-ter);margin-bottom:8px}
-
-    .cat-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;margin-top:4px}
-    .cat-card{padding:10px 14px;border-radius:var(--radius-sm);background:var(--bg-card);border:2px solid transparent;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:var(--shadow);transition:border-color .2s;font-size:13px;font-weight:600}
+    /* ===== RECORDS TAB ===== */
+    .section-hdr{font-size:12px;font-weight:700;color:var(--text-sec);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+    .cat-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+    .cat-card{padding:10px 14px;border-radius:var(--radius-sm);background:var(--bg-card);border:2px solid transparent;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:var(--shadow);transition:border-color .2s,background .2s;font-size:13px;font-weight:600}
     .cat-card:hover{border-color:var(--border)}
+    .cat-card.selected{border-color:var(--primary);background:var(--primary-light)}
     .cat-card-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-    .cat-card-actions{display:flex;gap:2px;margin-left:auto}
-    .cat-card-actions button{background:none;border:none;color:var(--text-ter);font-size:12px;cursor:pointer;padding:3px 5px;border-radius:4px;transition:color .2s}
-    .cat-card-actions .edit-cat:hover{color:var(--primary)}
-    .cat-card-actions .del-cat:hover{color:var(--danger)}
+    .cat-card-count{font-size:11px;color:var(--text-ter);font-weight:400;margin-left:2px}
     .add-cat-chip{padding:10px 14px;border-radius:var(--radius-sm);border:2px dashed var(--border);background:transparent;cursor:pointer;font-size:13px;font-weight:600;color:var(--text-ter);font-family:inherit;transition:border-color .2s,color .2s}
     .add-cat-chip:hover{border-color:var(--primary);color:var(--primary)}
+
+    .records-panel{animation:fadeIn .25s ease}
+    .rec-panel-header{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+    .rec-panel-title{font-size:16px;font-weight:700;flex:1;display:flex;align-items:center;gap:8px}
+    .rec-panel-title .cat-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+    .rec-panel-actions button{background:none;border:none;color:var(--text-ter);font-size:14px;cursor:pointer;padding:6px 8px;border-radius:6px;transition:color .2s,background .2s}
+    .rec-panel-actions button:hover{background:var(--bg-input);color:var(--text)}
+    .rec-panel-actions .del:hover{color:var(--danger);background:var(--danger-light)}
+
+    .range-row{display:flex;align-items:center;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+    .range-row label{font-size:11px;font-weight:700;color:var(--text-ter);text-transform:uppercase;letter-spacing:.5px}
+    .range-input{font-family:inherit;font-size:14px;padding:7px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg-input);color:var(--text);outline:none;width:auto;flex:1;min-width:0;transition:border-color .2s}
+    .range-input:focus{border-color:var(--primary)}
+    .range-clear{padding:7px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg-card);color:var(--text-sec);font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s}
+    .range-clear:hover{border-color:var(--primary);color:var(--primary)}
+    .rec-count-badge{font-size:12px;color:var(--text-ter);font-weight:400}
+
+    .rec-card{background:var(--bg-card);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:6px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow)}
+    .rec-color-bar{width:3px;height:32px;border-radius:2px;flex-shrink:0}
+    .rec-info{flex:1;min-width:0}
+    .rec-num{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .rec-meta{font-size:11px;color:var(--text-sec);margin-top:1px}
+    .rec-note{font-size:11px;color:var(--text-ter);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .rec-del{background:none;border:none;color:var(--text-ter);font-size:14px;cursor:pointer;padding:6px;border-radius:6px;transition:color .2s,background .2s;flex-shrink:0}
+    .rec-del:hover{color:var(--danger);background:var(--danger-light)}
+
+    /* Active/Inactive status toggle */
+    .status-toggle{display:flex;gap:0;border-radius:var(--radius-sm);overflow:hidden;border:1.5px solid var(--border)}
+    .status-opt{padding:9px 16px;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;border:none;background:var(--bg-input);color:var(--text-ter);transition:all .2s;display:flex;align-items:center;gap:6px}
+    .status-opt:first-child{border-right:1.5px solid var(--border)}
+    .status-opt.sel-active{background:rgba(45,170,110,0.15);color:#2daa6e;border-color:transparent}
+    .status-opt.sel-inactive{background:var(--bg-input);color:var(--text-sec);border-color:transparent}
+    .dark .status-opt.sel-active{background:rgba(76,184,128,0.18);color:#4cb880}
+    .status-dot-s{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+    .status-dot-s.dot-active{background:#2daa6e}
+    .status-dot-s.dot-inactive{background:#a0a0a0}
+    .dark .status-dot-s.dot-active{background:#4cb880}
+
+    /* Status badge on record card */
+    .rec-status{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:2px 8px;border-radius:10px;flex-shrink:0;white-space:nowrap}
+    .rec-status.is-active{background:rgba(45,170,110,0.13);color:#2daa6e}
+    .rec-status.is-inactive{background:var(--bg-input);color:var(--text-ter)}
+    .dark .rec-status.is-active{background:rgba(76,184,128,0.16);color:#4cb880}
+
+    .add-rec-btn{width:100%;padding:12px;border:2px dashed var(--border);border-radius:var(--radius-sm);background:transparent;color:var(--text-sec);font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;margin-top:8px;transition:border-color .2s,color .2s}
+    .add-rec-btn:hover{border-color:var(--primary);color:var(--primary)}
+    .add-rec-btn i{margin-right:4px}
 
     /* ===== ANALYTICS TAB ===== */
     .period-selector{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
     .period-btn{padding:7px 13px;border-radius:18px;border:1.5px solid var(--border);background:var(--bg-card);color:var(--text-sec);font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s}
     .period-btn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
-    .custom-range{display:none;gap:6px;align-items:center;margin-bottom:14px}
-    .custom-range.show{display:flex}
-    .custom-range input{flex:1;font-family:inherit;font-size:14px;padding:8px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg-input);color:var(--text);outline:none}
-    .custom-range span{color:var(--text-ter);font-size:12px}
+    .custom-range-an{display:none;gap:6px;align-items:center;margin-bottom:14px}
+    .custom-range-an.show{display:flex}
+    .custom-range-an input{flex:1;font-family:inherit;font-size:14px;padding:8px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg-input);color:var(--text);outline:none}
+    .custom-range-an span{color:var(--text-ter);font-size:12px}
     .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
     .stat-card{background:var(--bg-card);border-radius:var(--radius-sm);padding:14px 10px;text-align:center;box-shadow:var(--shadow)}
     .stat-value{font-family:'Fraunces',serif;font-size:26px;font-weight:900;color:var(--primary);line-height:1.1}
@@ -166,10 +201,7 @@
     .chart-card{background:var(--bg-card);border-radius:var(--radius);padding:16px 14px;margin-bottom:14px;box-shadow:var(--shadow)}
     .chart-card h3{font-size:13px;font-weight:700;margin-bottom:12px}
     .chart-wrap{position:relative;height:200px}
-    .chart-wrap-sm{position:relative;height:160px}
-    .weekday-filter{display:flex;gap:6px;margin-bottom:14px}
-    .weekday-btn{padding:6px 12px;border-radius:14px;border:1.5px solid var(--border);background:var(--bg-card);color:var(--text-sec);font-size:11px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s}
-    .weekday-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
     .data-section{border-top:1px solid var(--border);padding-top:18px;margin-top:8px}
     .data-section h3{font-size:12px;font-weight:700;color:var(--text-sec);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px}
     .data-btns{display:flex;gap:8px}
@@ -193,17 +225,6 @@
     .form-input{font-family:inherit;font-size:16px;padding:10px 12px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--bg-input);color:var(--text);width:100%;outline:none;transition:border-color .2s}
     .form-input:focus{border-color:var(--primary)}
     textarea.form-input{resize:vertical;min-height:60px}
-    .type-chips{display:flex;flex-wrap:wrap;gap:8px}
-    .type-chip{padding:8px 16px;border-radius:20px;border:2px solid var(--border);background:var(--bg-card);font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;transition:all .15s}
-    .type-chip.selected{color:#fff}
-    .cat-select-row{display:flex;flex-wrap:wrap;gap:6px}
-    .cat-sel-chip{padding:6px 12px;border-radius:16px;border:1.5px solid var(--border);background:var(--bg-card);font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:4px}
-    .cat-sel-chip .check{display:none;font-size:10px}
-    .cat-sel-chip.selected .check{display:inline}
-    .cat-sel-chip.selected{color:#fff}
-    .new-cat-row{display:flex;gap:6px;margin-top:8px}
-    .new-cat-row input{flex:1;font-family:inherit;font-size:14px;padding:8px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg-input);color:var(--text);outline:none}
-    .new-cat-row button{padding:8px 14px;border-radius:8px;border:none;background:var(--primary);color:#fff;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer}
     .color-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
     .color-swatch{width:100%;aspect-ratio:1;border-radius:50%;border:3px solid transparent;cursor:pointer;transition:transform .15s,border-color .15s}
     .color-swatch:hover{transform:scale(1.12)}
@@ -230,7 +251,7 @@
   </style>
 </head>
 <body>
-  <!-- LOGIN -->
+  <!-- LOGIN SCREEN -->
   <div id="loginScreen" class="login-screen">
     <div class="login-logo">Jeff's Dietetic<br>Case Record</div>
     <div class="login-sub">Sign in to access your data</div>
@@ -251,52 +272,53 @@
         <button class="sign-out-btn" id="signOutBtn" title="Sign out"><i class="fas fa-sign-out-alt"></i></button>
       </div>
     </header>
+
     <main class="tab-content">
-      <!-- CASES -->
-      <div id="tab-cases" class="tab-pane active">
+      <!-- COUNTER -->
+      <div id="tab-counter" class="tab-pane active">
         <div id="storageWarn"></div>
-        <div class="date-row">
+        <div class="counter-date-row">
           <button id="cPrev"><i class="fas fa-chevron-left"></i></button>
-          <input type="date" class="date-input" id="cDate">
+          <input type="date" class="counter-date-input" id="cDate">
           <button id="cNext"><i class="fas fa-chevron-right"></i></button>
           <button class="today-pill" id="cToday">Today</button>
         </div>
-        <div class="day-summary"><div class="day-count" id="dayCount">0</div><div class="day-label" id="dayLabel">cases today</div></div>
-        <div id="caseList"></div>
-        <button class="add-case-btn" id="addCaseBtn"><i class="fas fa-plus"></i> Add Case</button>
+        <div class="counter-hero">
+          <div class="counter-input-wrap">
+            <input type="number" class="counter-input" id="cInput" value="0" min="0">
+          </div>
+          <div class="counter-label">cases <span class="counter-date-display" id="cLabel"></span></div>
+        </div>
+        <div class="counter-controls">
+          <button class="ctrl-btn ctrl-minus" id="cMinus"><i class="fas fa-minus"></i></button>
+          <button class="ctrl-btn ctrl-plus" id="cPlus"><i class="fas fa-plus"></i></button>
+        </div>
         <div class="week-section">
           <div class="week-title" id="weekTitle">This Week</div>
           <div id="weekRows"></div>
         </div>
       </div>
-      <!-- BROWSE -->
-      <div id="tab-browse" class="tab-pane">
-        <div class="section-hdr">Filters</div>
-        <div class="filter-row">
-          <label>From</label><input type="date" class="filter-date" id="bFrom">
-          <label>To</label><input type="date" class="filter-date" id="bTo">
-          <button class="filter-clear" id="bClear">All</button>
-        </div>
-        <div class="section-hdr">Type</div>
-        <div class="chip-row" id="typeFilterChips"></div>
-        <div class="section-hdr">Category</div>
-        <div class="chip-row" id="catFilterChips"></div>
-        <div class="result-count" id="browseCount"></div>
-        <div id="browseList"></div>
-        <div style="border-top:1px solid var(--border);margin-top:20px;padding-top:16px">
-          <div class="section-hdr">Manage Categories</div>
-          <div class="cat-grid" id="catGrid"></div>
-        </div>
+
+      <!-- RECORDS -->
+      <div id="tab-records" class="tab-pane">
+        <div class="section-hdr">Categories</div>
+        <div class="cat-grid" id="catGrid"></div>
+        <div id="recPanel"></div>
       </div>
+
       <!-- ANALYTICS -->
       <div id="tab-analytics" class="tab-pane">
         <div class="period-selector" id="periodSel"></div>
-        <div class="custom-range" id="customRange"><input type="date" id="anStart"><span>to</span><input type="date" id="anEnd"></div>
-        <div class="weekday-filter" id="weekdayFilter"></div>
+        <div class="custom-range-an" id="customRange">
+          <input type="date" id="anStart">
+          <span>to</span>
+          <input type="date" id="anEnd">
+        </div>
         <div class="stats-grid" id="statsGrid"></div>
-        <div class="chart-card"><h3>By Type</h3><div class="chart-wrap-sm"><canvas id="typeChart"></canvas></div></div>
-        <div class="chart-card"><h3>By Category</h3><div class="chart-wrap-sm"><canvas id="catChart"></canvas></div></div>
-        <div class="chart-card"><h3>Daily Trend</h3><div class="chart-wrap"><canvas id="dailyChart"></canvas></div></div>
+        <div class="chart-card">
+          <h3>Daily Cases</h3>
+          <div class="chart-wrap"><canvas id="dailyChart"></canvas></div>
+        </div>
         <div class="data-section">
           <h3>Data Management</h3>
           <div class="data-btns">
@@ -307,470 +329,915 @@
         </div>
       </div>
     </main>
+
     <nav class="bottom-nav">
-      <button class="nav-item active" data-tab="cases"><i class="fas fa-clipboard-list"></i><span>Cases</span></button>
-      <button class="nav-item" data-tab="browse"><i class="fas fa-search"></i><span>Browse</span></button>
-      <button class="nav-item" data-tab="analytics"><i class="fas fa-chart-pie"></i><span>Analytics</span></button>
+      <button class="nav-item active" data-tab="counter"><i class="fas fa-calculator"></i><span>Counter</span></button>
+      <button class="nav-item" data-tab="records"><i class="fas fa-clipboard-list"></i><span>Records</span></button>
+      <button class="nav-item" data-tab="analytics"><i class="fas fa-chart-bar"></i><span>Analytics</span></button>
     </nav>
   </div>
 
-  <!-- Case Modal -->
-  <div id="caseModal" class="modal-overlay">
+  <!-- Add Record Modal -->
+  <div id="recModal" class="modal-overlay">
     <div class="modal">
-      <div class="modal-header"><h2 id="caseModalTitle">New Case</h2><button class="modal-close" data-modal="caseModal"><i class="fas fa-times"></i></button></div>
-      <div class="modal-body">
-        <div class="form-group"><label>Case Number</label><input type="text" class="form-input" id="mCaseNum" placeholder="e.g. OP-2026-031"></div>
-        <div class="form-group"><label>Date</label><input type="date" class="form-input" id="mCaseDate"></div>
-        <div class="form-group"><label>Type of Case</label><div class="type-chips" id="mTypeChips"></div></div>
-        <div class="form-group"><label>Status</label><div class="status-chips" id="mStatusChips"></div></div>
-        <div class="form-group"><label>Categories</label><div class="cat-select-row" id="mCatChips"></div><div class="new-cat-row" id="newCatRow" style="display:none"><input type="text" id="newCatInput" placeholder="New category name"><button id="newCatSave">Add</button></div></div>
-        <div class="form-group"><label>Notes (optional)</label><textarea class="form-input" id="mCaseNotes" placeholder="Special notes..."></textarea></div>
+      <div class="modal-header">
+        <h2>Add Record</h2>
+        <button class="modal-close" data-modal="recModal"><i class="fas fa-times"></i></button>
       </div>
-      <div class="modal-footer"><button class="btn btn-primary" id="saveCaseBtn">Save Case</button></div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Case Number / Reference</label>
+          <input type="text" class="form-input" id="recNumInput" placeholder="e.g. OP-2026-031">
+        </div>
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" class="form-input" id="recDateInput">
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <div class="status-toggle" id="recStatusToggle">
+            <button type="button" class="status-opt sel-active" data-val="active"><span class="status-dot-s dot-active"></span> Active</button>
+            <button type="button" class="status-opt" data-val="inactive"><span class="status-dot-s dot-inactive"></span> Inactive</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Note (optional)</label>
+          <textarea class="form-input" id="recNoteInput" placeholder="Brief details..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="saveRecBtn">Save Record</button>
+      </div>
     </div>
   </div>
+
   <!-- Category Modal -->
   <div id="catModal" class="modal-overlay">
     <div class="modal">
-      <div class="modal-header"><h2 id="catModalTitle">Add Category</h2><button class="modal-close" data-modal="catModal"><i class="fas fa-times"></i></button></div>
-      <div class="modal-body">
-        <div class="form-group"><label>Category Name</label><input type="text" class="form-input" id="catNameInput" placeholder="e.g. DM"></div>
-        <div class="form-group"><label>Color</label><div class="color-grid" id="colorGrid"></div></div>
+      <div class="modal-header">
+        <h2 id="catModalTitle">Add Category</h2>
+        <button class="modal-close" data-modal="catModal"><i class="fas fa-times"></i></button>
       </div>
-      <div class="modal-footer"><button class="btn btn-primary" id="saveCatBtn">Save</button></div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Category Name</label>
+          <input type="text" class="form-input" id="catNameInput" placeholder="e.g. Surgery">
+        </div>
+        <div class="form-group">
+          <label>Color</label>
+          <div class="color-grid" id="colorGrid"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="saveCatBtn">Save</button>
+      </div>
     </div>
   </div>
+
   <!-- Confirm -->
   <div id="confirmModal" class="modal-overlay">
     <div class="modal" style="border-radius:var(--radius)">
       <div class="confirm-body"><p id="confirmMsg"></p></div>
-      <div class="confirm-footer"><button class="btn btn-ghost" id="confirmNo">Cancel</button><button class="btn btn-danger" id="confirmYes">Delete</button></div>
+      <div class="confirm-footer">
+        <button class="btn btn-ghost" id="confirmNo">Cancel</button>
+        <button class="btn btn-danger" id="confirmYes">Delete</button>
+      </div>
     </div>
   </div>
+
   <div class="toast" id="toast"></div>
 
-<script>
-/* ===== DARK MODE ===== */
-if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark');
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',e=>{e.matches?document.documentElement.classList.add('dark'):document.documentElement.classList.remove('dark');});
-
-/* ===== CONSTANTS ===== */
-const CAT_COLORS=['#e05252','#e07840','#e0a830','#68b845','#2daa6e','#30a8c0','#4878d0','#7050d0','#a848c0','#d050a0','#78909c','#8d6e63'];
-const CASE_TYPES=[
-  {key:'O',color:'#4878d0',bg:'rgba(72,120,208,0.12)'},
-  {key:'T',color:'#2daa6e',bg:'rgba(45,170,110,0.12)'},
-  {key:'O+T',color:'#7050d0',bg:'rgba(112,80,208,0.12)'},
-  {key:'TPN',color:'#e07840',bg:'rgba(224,120,64,0.12)'},
-  {key:'Education',color:'#30a8c0',bg:'rgba(48,168,192,0.12)'}
-];
-const CASE_STATUSES=[
-  {key:'Active',color:'#2daa6e',bg:'rgba(45,170,110,0.12)'},
-  {key:'PRN',color:'#e0a830',bg:'rgba(224,168,48,0.12)'},
-  {key:'Discharged',color:'#e05252',bg:'rgba(224,82,82,0.12)'}
-];
-function statusInfo(k){return CASE_STATUSES.find(s=>s.key===k)||CASE_STATUSES[0];}
-const WEEKDAY_OPTIONS=[{key:'mon-fri',label:'Mon–Fri'},{key:'mon-sat',label:'Mon–Sat'},{key:'all',label:'All Days'}];
-const PERIODS=[{key:'week',label:'This Week'},{key:'month',label:'This Month'},{key:'30days',label:'Last 30d'},{key:'year',label:'This Year'},{key:'custom',label:'Custom'}];
-const DAY_NAMES=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-const ALLOWED_EMAIL='tmh.jeffreychan@gmail.com';
-function typeInfo(k){return CASE_TYPES.find(t=>t.key===k)||{key:k,color:'#78909c',bg:'rgba(120,144,156,0.12)'};}
-
-/* ===== FIREBASE ===== */
-let firestore=null,auth=null,usingMemory=false;
-const mem={cases:[],categories:[],nextId:1};
-const firebaseConfig={apiKey:"AIzaSyDXx-Scqt_y8swNOqqIEq-MwInE0gMxfx8",authDomain:"tmh-case.firebaseapp.com",projectId:"tmh-case",storageBucket:"tmh-case.firebasestorage.app",messagingSenderId:"461118243183",appId:"1:461118243183:web:eb65e167783233c344e89a"};
-try{firebase.initializeApp(firebaseConfig);firestore=firebase.firestore();auth=firebase.auth();}catch(_e){usingMemory=true;}
-/* If Firebase SDK failed to load (CSP blocks gstatic.com in Poe), skip auth */
-if(typeof firebase==='undefined'||!firestore){usingMemory=true;firestore=null;auth=null;}
-
-/* ===== AUTH ===== */
-function showLoginError(m){const e=document.getElementById('loginError');e.textContent=m;e.classList.add('show');}
-function hideLoginError(){document.getElementById('loginError').classList.remove('show');}
-function showLoginLoading(s){document.getElementById('loginLoading').classList.toggle('show',s);document.getElementById('googleSignInBtn').style.display=s?'none':'';}
-async function signInWithGoogle(){
-  if(!auth){showLoginError('Firebase not available.');return;}
-  hideLoginError();showLoginLoading(true);
-  try{const p=new firebase.auth.GoogleAuthProvider();p.setCustomParameters({prompt:'select_account'});const r=await auth.signInWithPopup(p);if(r.user.email.toLowerCase()!==ALLOWED_EMAIL.toLowerCase()){await auth.signOut();showLoginLoading(false);showLoginError('Access denied. Only '+ALLOWED_EMAIL+' can use this app. You signed in as '+r.user.email);return;}}
-  catch(err){showLoginLoading(false);if(err.code==='auth/popup-closed-by-user')return;if(err.code==='auth/popup-blocked'){try{const p=new firebase.auth.GoogleAuthProvider();p.setCustomParameters({prompt:'select_account'});await auth.signInWithRedirect(p);}catch(_e){showLoginError('Sign-in failed. Allow popups.');}return;}showLoginError('Sign-in failed: '+(err.message||'Unknown'));}
-}
-async function signOutUser(){if(auth)await auth.signOut();document.getElementById('app').style.display='none';document.getElementById('loginScreen').classList.remove('hidden');showLoginLoading(false);hideLoginError();}
-/* Skip login for preview — set SKIP_LOGIN=false to re-enable auth */
-const SKIP_LOGIN=true;
-if(!SKIP_LOGIN&&auth&&!usingMemory){auth.onAuthStateChanged(async u=>{if(u&&u.email.toLowerCase()===ALLOWED_EMAIL.toLowerCase()){document.getElementById('loginScreen').classList.add('hidden');document.getElementById('app').style.display='';await initApp();}else if(u){await auth.signOut();showLoginLoading(false);showLoginError('Access denied. Only '+ALLOWED_EMAIL+'.');}else{document.getElementById('app').style.display='none';document.getElementById('loginScreen').classList.remove('hidden');showLoginLoading(false);}});}
-else{document.getElementById('loginScreen').classList.add('hidden');document.getElementById('app').style.display='';usingMemory=true;initApp();}
-document.getElementById('googleSignInBtn').addEventListener('click',signInWithGoogle);
-document.getElementById('signOutBtn').addEventListener('click',signOutUser);
-
-/* ===== DATABASE ===== */
-async function addCase(c){showSyncStatus('saving');if(usingMemory){c.id=String(mem.nextId++);mem.cases.push(c);showSyncStatus('saved');return c.id;}const r=await firestore.collection('cases').add(c);showSyncStatus('saved');return r.id;}
-async function updateCase(id,data){showSyncStatus('saving');if(usingMemory){const i=mem.cases.findIndex(c=>c.id===id);if(i>=0)Object.assign(mem.cases[i],data);showSyncStatus('saved');return;}await firestore.collection('cases').doc(id).update(data);showSyncStatus('saved');}
-async function deleteCase(id){showSyncStatus('saving');if(usingMemory){mem.cases=mem.cases.filter(c=>c.id!==id);showSyncStatus('saved');return;}await firestore.collection('cases').doc(id).delete();showSyncStatus('saved');}
-async function getCasesByDate(date){if(usingMemory)return mem.cases.filter(c=>c.date===date).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));const s=await firestore.collection('cases').where('date','==',date).get();return s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));}
-async function getCasesRange(start,end){if(usingMemory)return mem.cases.filter(c=>c.date>=start&&c.date<=end);const s=await firestore.collection('cases').where('date','>=',start).where('date','<=',end).get();return s.docs.map(d=>({id:d.id,...d.data()}));}
-async function getAllCases(){if(usingMemory)return[...mem.cases];const s=await firestore.collection('cases').get();return s.docs.map(d=>({id:d.id,...d.data()}));}
-async function getCategories(){if(usingMemory)return[...mem.categories];const s=await firestore.collection('categories').orderBy('name').get();return s.docs.map(d=>({id:d.id,...d.data()}));}
-async function addCategory(cat){showSyncStatus('saving');if(usingMemory){cat.id=String(mem.nextId++);mem.categories.push(cat);showSyncStatus('saved');return cat.id;}const r=await firestore.collection('categories').add({name:cat.name,color:cat.color});showSyncStatus('saved');return r.id;}
-async function updateCategoryDB(cat){showSyncStatus('saving');if(usingMemory){const i=mem.categories.findIndex(c=>c.id===cat.id);if(i>=0)mem.categories[i]=cat;showSyncStatus('saved');return;}await firestore.collection('categories').doc(cat.id).set({name:cat.name,color:cat.color});showSyncStatus('saved');}
-async function deleteCategoryDB(id){showSyncStatus('saving');if(usingMemory){mem.categories=mem.categories.filter(c=>c.id!==id);showSyncStatus('saved');return;}await firestore.collection('categories').doc(id).delete();showSyncStatus('saved');}
-async function clearAllData(){if(usingMemory){mem.cases=[];mem.categories=[];return;}for(const col of['cases','categories']){const s=await firestore.collection(col).get();for(const d of s.docs)await d.ref.delete();}}
-
-/* ===== STATE ===== */
-let categories=[],currentTab='cases',caseDate=todayStr(),selectedPeriod='week';
-let editingCaseId=null,selectedType=null,selectedStatus='Active',selectedCats=new Set();
-let editingCatId=null,selectedCatColor=CAT_COLORS[0];
-let bFilterFrom='',bFilterTo='',bFilterTypes=new Set(),bFilterCats=new Set();
-let dailyChartInst=null,typeChartInst=null,catChartInst=null,confirmResolve=null,appInitialized=false,selectedWeekday='mon-fri';
-
-/* ===== HELPERS ===== */
-function todayStr(){return new Date().toISOString().split('T')[0];}
-function fmtDate(d){return new Date(d+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}
-function fmtShort(d){return new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});}
-function addDays(d,n){const dt=new Date(d+'T12:00:00');dt.setDate(dt.getDate()+n);return dt.toISOString().split('T')[0];}
-function getWeekStart(d){const dow=new Date(d+'T12:00:00').getDay();return addDays(d,-(dow===0?6:dow-1));}
-function daysBetween(s,e){const a=[];let c=s;while(c<=e){a.push(c);c=addDays(c,1);}return a;}
-function getRange(p){const t=todayStr();switch(p){case'week':return{start:getWeekStart(t),end:addDays(getWeekStart(t),6)};case'month':return{start:t.slice(0,8)+'01',end:t};case'30days':return{start:addDays(t,-29),end:t};case'year':return{start:t.slice(0,5)+'01-01',end:t};default:return{start:t,end:t};}}
-
-/* ===== UTILS ===== */
-function $(id){return document.getElementById(id);}
-function escHtml(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
-function showToast(m){const t=$('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
-let syncTimer=null;
-function showSyncStatus(status){const el=$('syncIndicator'),txt=$('syncText');if(!el||!txt)return;el.classList.remove('saving');if(status==='saving'){txt.textContent='Saving...';el.querySelector('i').className='fas fa-cloud-upload-alt';el.classList.add('saving');}else{txt.textContent='Saved';el.querySelector('i').className='fas fa-cloud';}el.classList.add('show');clearTimeout(syncTimer);if(status==='saved')syncTimer=setTimeout(()=>el.classList.remove('show'),2500);}
-function showModal(id){$(id).classList.add('show');}
-function hideModal(id){$(id).classList.remove('show');}
-function showConfirm(msg){return new Promise(resolve=>{$('confirmMsg').textContent=msg;showModal('confirmModal');confirmResolve=resolve;});}
-function catByName(name){return categories.find(c=>c.name===name);}
-
-/* ================================================================
-   TAB 1: CASES (Daily Log)
-   ================================================================ */
-async function renderCases(){
-  const cases=await getCasesByDate(caseDate);
-  const isToday=caseDate===todayStr();
-  $('cToday').classList.toggle('show',!isToday);
-  $('dayCount').textContent=cases.length;
-  $('dayLabel').textContent=cases.length===1?'case':'cases';
-
-  if(cases.length===0){
-    $('caseList').innerHTML='<div class="empty-state" style="padding:20px 0"><i class="fas fa-clipboard"></i><p>No cases logged'+(isToday?' today':'')+'.<br>Tap + to add one.</p></div>';
-  }else{
-    $('caseList').innerHTML=cases.map(c=>{
-      const ti=typeInfo(c.type);const si=statusInfo(c.status);
-      const catTags=(c.categories||[]).map(cn=>{const ci=catByName(cn);const col=ci?ci.color:'#78909c';return`<span class="cat-tag" style="background:${col}20;color:${col}">${escHtml(cn)}</span>`;}).join('');
-      return`<div class="case-card" data-id="${c.id}" style="border-left:4px solid ${si.color}">
-        <div class="case-top">
-          <span class="type-badge" style="background:${ti.bg};color:${ti.color}">${escHtml(c.type)}</span>
-          <span class="case-num">${escHtml(c.caseNum||'(no ref)')}</span>
-          <span class="status-label" style="color:${si.color}">${escHtml(c.status||'Active')}</span>
-          <button class="case-del" data-id="${c.id}" title="Delete"><i class="fas fa-trash-alt"></i></button>
-        </div>
-        ${catTags?'<div class="case-tags">'+catTags+'</div>':''}
-        ${c.notes?'<div class="case-notes">'+escHtml(c.notes)+'</div>':''}
-      </div>`;
-    }).join('');
-    // Bind events
-    $('caseList').querySelectorAll('.case-card').forEach(card=>{
-      card.addEventListener('click',e=>{if(e.target.closest('.case-del'))return;openEditCase(card.dataset.id,cases);});
+  <script>
+    /* ===== DARK MODE ===== */
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.add('dark');
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      e.matches ? document.documentElement.classList.add('dark') : document.documentElement.classList.remove('dark');
     });
-    $('caseList').querySelectorAll('.case-del').forEach(btn=>{
-      btn.addEventListener('click',async e=>{e.stopPropagation();const ok=await showConfirm('Delete this case?');if(!ok)return;await deleteCase(btn.dataset.id);showToast('Case deleted');renderCases();});
-    });
-  }
-  await renderWeekSummary();
-}
 
-async function renderWeekSummary(){
-  const ws=getWeekStart(caseDate);
-  const days=[];for(let i=0;i<7;i++)days.push(addDays(ws,i));
-  const cases=await getCasesRange(ws,addDays(ws,6));
-  const countMap={};cases.forEach(c=>{countMap[c.date]=(countMap[c.date]||0)+1;});
-  const maxC=Math.max(1,...Object.values(countMap));
-  const t=todayStr();
-  $('weekTitle').textContent=ws===getWeekStart(t)?'This Week':'Week of '+fmtShort(ws);
-  $('weekRows').innerHTML=days.map((d,i)=>{
-    const cnt=countMap[d]||0;const pct=maxC>0?(cnt/maxC*100):0;
-    return`<div class="week-row ${d===caseDate?'is-selected':''}"><span class="week-day">${DAY_NAMES[i]}</span><span class="week-date">${d.split('-')[2]}</span><div class="week-bar-bg"><div class="week-bar" style="width:${pct}%"></div></div><span class="week-count">${cnt||'\u2013'}</span></div>`;
-  }).join('');
-}
+    /* ===== CONSTANTS ===== */
+    const COLORS = ['#e05252','#e07840','#e0a830','#68b845','#2daa6e','#30a8c0','#4878d0','#7050d0','#a848c0','#d050a0','#78909c','#8d6e63'];
+    const PERIODS = [
+      { key: 'week', label: 'This Week' },
+      { key: 'weekMF', label: 'Mon\u2013Fri' },
+      { key: 'weekMS', label: 'Mon\u2013Sat' },
+      { key: 'month', label: 'This Month' },
+      { key: '30days', label: 'Last 30d' },
+      { key: 'year', label: 'This Year' },
+      { key: 'custom', label: 'Custom' }
+    ];
+    const DAY_NAMES = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    const ALLOWED_EMAIL = 'tmh.jeffreychan@gmail.com';
 
-/* ===== CASE MODAL ===== */
-function openNewCase(){
-  editingCaseId=null;selectedType=null;selectedStatus='Active';selectedCats=new Set();
-  $('caseModalTitle').textContent='New Case';
-  $('mCaseNum').value='';$('mCaseDate').value=caseDate;$('mCaseNotes').value='';
-  renderModalTypeChips();renderModalStatusChips();renderModalCatChips();
-  showModal('caseModal');setTimeout(()=>$('mCaseNum').focus(),300);
-}
-function openEditCase(id,cases){
-  const c=cases.find(x=>x.id===id);if(!c)return;
-  editingCaseId=id;selectedType=c.type;selectedStatus=c.status||'Active';selectedCats=new Set(c.categories||[]);
-  $('caseModalTitle').textContent='Edit Case';
-  $('mCaseNum').value=c.caseNum||'';$('mCaseDate').value=c.date;$('mCaseNotes').value=c.notes||'';
-  renderModalTypeChips();renderModalStatusChips();renderModalCatChips();showModal('caseModal');
-}
-function renderModalTypeChips(){
-  $('mTypeChips').innerHTML=CASE_TYPES.map(t=>`<div class="type-chip ${selectedType===t.key?'selected':''}" data-type="${t.key}" style="${selectedType===t.key?'background:'+t.color+';border-color:'+t.color+';color:#fff':''}"> ${t.key}</div>`).join('');
-  $('mTypeChips').querySelectorAll('.type-chip').forEach(ch=>{ch.addEventListener('click',()=>{selectedType=ch.dataset.type;renderModalTypeChips();});});
-}
-function renderModalStatusChips(){
-  $('mStatusChips').innerHTML=CASE_STATUSES.map(s=>{
-    const sel=selectedStatus===s.key;
-    return`<div class="status-chip ${sel?'selected':''}" data-status="${s.key}" style="${sel?'background:'+s.color+';border-color:'+s.color+';color:#fff':''}"><span class="sdot" style="background:${sel?'#fff':s.color}"></span>${s.key}</div>`;
-  }).join('');
-  $('mStatusChips').querySelectorAll('.status-chip').forEach(ch=>{ch.addEventListener('click',()=>{selectedStatus=ch.dataset.status;renderModalStatusChips();});});
-}
-function renderModalCatChips(){
-  let html=categories.map(c=>{
-    const sel=selectedCats.has(c.name);
-    return`<div class="cat-sel-chip ${sel?'selected':''}" data-name="${escHtml(c.name)}" style="${sel?'background:'+c.color+';border-color:'+c.color+';color:#fff':''}"><span class="check"><i class="fas fa-check"></i></span>${escHtml(c.name)}</div>`;
-  }).join('');
-  html+='<div class="cat-sel-chip" id="newCatChip" style="border-style:dashed;color:var(--text-ter)"><i class="fas fa-plus" style="font-size:10px"></i> New</div>';
-  $('mCatChips').innerHTML=html;
-  $('mCatChips').querySelectorAll('.cat-sel-chip[data-name]').forEach(ch=>{
-    ch.addEventListener('click',()=>{const n=ch.dataset.name;if(selectedCats.has(n))selectedCats.delete(n);else selectedCats.add(n);renderModalCatChips();});
-  });
-  const newChip=$('newCatChip');
-  if(newChip)newChip.addEventListener('click',()=>{$('newCatRow').style.display='flex';$('newCatInput').focus();});
-}
-async function saveNewCatInline(){
-  const name=$('newCatInput').value.trim();if(!name){showToast('Enter a name');return;}
-  const dup=categories.find(c=>c.name.toLowerCase()===name.toLowerCase());
-  if(dup){selectedCats.add(dup.name);$('newCatInput').value='';$('newCatRow').style.display='none';renderModalCatChips();return;}
-  const color=CAT_COLORS[categories.length%CAT_COLORS.length];
-  await addCategory({name,color});categories=await getCategories();
-  selectedCats.add(name);$('newCatInput').value='';$('newCatRow').style.display='none';
-  renderModalCatChips();showToast('Category created');
-}
-async function saveCaseFromModal(){
-  const caseNum=$('mCaseNum').value.trim();
-  const date=$('mCaseDate').value||todayStr();
-  const notes=$('mCaseNotes').value.trim();
-  if(!selectedType){showToast('Please select a case type');return;}
-  const data={caseNum,date,type:selectedType,status:selectedStatus,categories:[...selectedCats],notes,createdAt:new Date().toISOString()};
-  if(editingCaseId){await updateCase(editingCaseId,data);}else{await addCase(data);}
-  hideModal('caseModal');showToast(editingCaseId?'Case updated':'Case saved');
-  if(currentTab==='cases')renderCases();else if(currentTab==='browse')renderBrowse();
-}
+    /* ===== FIREBASE ===== */
+    let firestore = null;
+    let auth = null;
+    let usingMemory = false;
+    const mem = { dailyCounts: [], records: [], categories: [], nextId: 1 };
 
-/* ================================================================
-   TAB 2: BROWSE
-   ================================================================ */
-async function renderBrowse(){
-  categories=await getCategories();
-  // Type filter chips
-  $('typeFilterChips').innerHTML=CASE_TYPES.map(t=>{
-    const active=bFilterTypes.has(t.key);
-    return`<div class="filter-chip ${active?'active':''}" data-type="${t.key}" style="${active?'background:'+t.color+';border-color:'+t.color:''}"> ${t.key}</div>`;
-  }).join('');
-  $('typeFilterChips').querySelectorAll('.filter-chip').forEach(ch=>{
-    ch.addEventListener('click',()=>{const k=ch.dataset.type;if(bFilterTypes.has(k))bFilterTypes.delete(k);else bFilterTypes.add(k);renderBrowse();});
-  });
-  // Cat filter chips
-  $('catFilterChips').innerHTML=categories.map(c=>{
-    const active=bFilterCats.has(c.name);
-    return`<div class="filter-chip ${active?'active':''}" data-cat="${escHtml(c.name)}" style="${active?'background:'+c.color+';border-color:'+c.color:''}"> ${escHtml(c.name)}</div>`;
-  }).join('');
-  $('catFilterChips').querySelectorAll('.filter-chip').forEach(ch=>{
-    ch.addEventListener('click',()=>{const k=ch.dataset.cat;if(bFilterCats.has(k))bFilterCats.delete(k);else bFilterCats.add(k);renderBrowse();});
-  });
-  // Fetch and filter
-  let cases;
-  if(bFilterFrom||bFilterTo){cases=await getCasesRange(bFilterFrom||'2000-01-01',bFilterTo||'2099-12-31');}else{cases=await getAllCases();}
-  if(bFilterTypes.size>0)cases=cases.filter(c=>bFilterTypes.has(c.type));
-  if(bFilterCats.size>0)cases=cases.filter(c=>(c.categories||[]).some(cn=>bFilterCats.has(cn)));
-  cases.sort((a,b)=>b.date.localeCompare(a.date)||(b.createdAt||'').localeCompare(a.createdAt||''));
-  $('browseCount').textContent=cases.length+' case'+(cases.length!==1?'s':'');
-  if(cases.length===0){
-    $('browseList').innerHTML='<div class="empty-state" style="padding:20px 0"><i class="fas fa-search"></i><p>No cases found.</p></div>';
-  }else{
-    $('browseList').innerHTML=cases.map(c=>{
-      const ti=typeInfo(c.type);const si=statusInfo(c.status);
-      const catTags=(c.categories||[]).map(cn=>{const ci=catByName(cn);const col=ci?ci.color:'#78909c';return`<span class="cat-tag" style="background:${col}20;color:${col}">${escHtml(cn)}</span>`;}).join('');
-      return`<div class="case-card" data-id="${c.id}" style="border-left:4px solid ${si.color}">
-        <div class="case-top"><span class="type-badge" style="background:${ti.bg};color:${ti.color}">${escHtml(c.type)}</span><span class="case-num">${escHtml(c.caseNum||'(no ref)')}</span><span class="status-label" style="color:${si.color}">${escHtml(c.status||'Active')}</span><span style="font-size:11px;color:var(--text-ter);flex-shrink:0">${fmtShort(c.date)}</span></div>
-        ${catTags?'<div class="case-tags">'+catTags+'</div>':''}
-        ${c.notes?'<div class="case-notes">'+escHtml(c.notes)+'</div>':''}
-      </div>`;
-    }).join('');
-  }
-  // Category management
-  let catHtml='';
-  for(const c of categories){
-    catHtml+=`<div class="cat-card"><span class="cat-card-dot" style="background:${c.color}"></span>${escHtml(c.name)}<div class="cat-card-actions"><button class="edit-cat" data-id="${c.id}"><i class="fas fa-pen"></i></button><button class="del-cat" data-id="${c.id}" data-name="${escHtml(c.name)}"><i class="fas fa-trash-alt"></i></button></div></div>`;
-  }
-  catHtml+='<button class="add-cat-chip" id="addCatChipBrowse"><i class="fas fa-plus"></i> Add</button>';
-  $('catGrid').innerHTML=catHtml;
-  $('catGrid').querySelectorAll('.edit-cat').forEach(b=>{b.addEventListener('click',()=>{const c=categories.find(x=>x.id===b.dataset.id);if(c)openEditCategory(c);});});
-  $('catGrid').querySelectorAll('.del-cat').forEach(b=>{b.addEventListener('click',()=>deleteCategoryPrompt(b.dataset.id,b.dataset.name));});
-  const addBtn=$('addCatChipBrowse');if(addBtn)addBtn.addEventListener('click',openAddCategory);
-}
+    const firebaseConfig = {
+      apiKey: "AIzaSyDXx-Scqt_y8swNOqqIEq-MwInE0gMxfx8",
+      authDomain: "tmh-case.firebaseapp.com",
+      projectId: "tmh-case",
+      storageBucket: "tmh-case.firebasestorage.app",
+      messagingSenderId: "461118243183",
+      appId: "1:461118243183:web:eb65e167783233c344e89a"
+    };
 
-/* ===== CATEGORY MODAL ===== */
-function openAddCategory(){editingCatId=null;$('catModalTitle').textContent='Add Category';$('catNameInput').value='';selectedCatColor=CAT_COLORS[0];renderColorGrid();showModal('catModal');setTimeout(()=>$('catNameInput').focus(),300);}
-function openEditCategory(cat){editingCatId=cat.id;$('catModalTitle').textContent='Edit Category';$('catNameInput').value=cat.name;selectedCatColor=cat.color;renderColorGrid();showModal('catModal');}
-function renderColorGrid(){const g=$('colorGrid');g.innerHTML=CAT_COLORS.map(c=>`<div class="color-swatch ${c===selectedCatColor?'selected':''}" style="background:${c}" data-color="${c}"></div>`).join('');g.querySelectorAll('.color-swatch').forEach(s=>{s.addEventListener('click',()=>{selectedCatColor=s.dataset.color;renderColorGrid();});});}
-async function saveCategory(){
-  const name=$('catNameInput').value.trim();if(!name){showToast('Enter a name');return;}
-  const dup=categories.find(c=>c.name.toLowerCase()===name.toLowerCase()&&c.id!==editingCatId);if(dup){showToast('Already exists');return;}
-  if(editingCatId){
-    const old=categories.find(c=>c.id===editingCatId);
-    if(old&&old.name!==name){
-      const all=await getAllCases();
-      for(const c of all.filter(x=>(x.categories||[]).includes(old.name))){
-        const newCats=c.categories.map(cn=>cn===old.name?name:cn);
-        if(!usingMemory)await firestore.collection('cases').doc(c.id).update({categories:newCats});
-        else{const i=mem.cases.findIndex(x=>x.id===c.id);if(i>=0)mem.cases[i].categories=newCats;}
+    try {
+      firebase.initializeApp(firebaseConfig);
+      firestore = firebase.firestore();
+      auth = firebase.auth();
+    } catch (_e) {
+      usingMemory = true;
+    }
+
+    /* ===== AUTHENTICATION ===== */
+    function showLoginError(msg) {
+      const el = document.getElementById('loginError');
+      el.textContent = msg;
+      el.classList.add('show');
+    }
+    function hideLoginError() {
+      document.getElementById('loginError').classList.remove('show');
+    }
+    function showLoginLoading(show) {
+      document.getElementById('loginLoading').classList.toggle('show', show);
+      document.getElementById('googleSignInBtn').style.display = show ? 'none' : '';
+    }
+
+    async function signInWithGoogle() {
+      if (!auth) {
+        showLoginError('Firebase not available. Please check your connection.');
+        return;
+      }
+      hideLoginError();
+      showLoginLoading(true);
+      try {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: 'select_account' });
+        const result = await auth.signInWithPopup(provider);
+        const email = result.user.email;
+        if (email.toLowerCase() !== ALLOWED_EMAIL.toLowerCase()) {
+          await auth.signOut();
+          showLoginLoading(false);
+          showLoginError('Access denied. Only ' + ALLOWED_EMAIL + ' can use this app. You signed in as ' + email);
+          return;
+        }
+        // Auth state listener will handle showing the app
+      } catch (err) {
+        showLoginLoading(false);
+        if (err.code === 'auth/popup-closed-by-user') {
+          // User closed the popup, no error needed
+          return;
+        }
+        if (err.code === 'auth/popup-blocked') {
+          // Try redirect as fallback
+          try {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            provider.setCustomParameters({ prompt: 'select_account' });
+            await auth.signInWithRedirect(provider);
+          } catch (redirectErr) {
+            showLoginError('Sign-in failed. Please allow popups for this site.');
+          }
+          return;
+        }
+        showLoginError('Sign-in failed: ' + (err.message || 'Unknown error'));
       }
     }
-    await updateCategoryDB({id:editingCatId,name,color:selectedCatColor});
-  }else{await addCategory({name,color:selectedCatColor});}
-  hideModal('catModal');categories=await getCategories();showToast(editingCatId?'Updated':'Created');
-  if(currentTab==='browse')renderBrowse();
-}
-async function deleteCategoryPrompt(id,name){
-  const ok=await showConfirm('Delete category "'+name+'"? It will be removed from all cases.');
-  if(!ok)return;
-  const all=await getAllCases();
-  for(const c of all.filter(x=>(x.categories||[]).includes(name))){
-    const newCats=c.categories.filter(cn=>cn!==name);
-    if(!usingMemory)await firestore.collection('cases').doc(c.id).update({categories:newCats});
-    else{const i=mem.cases.findIndex(x=>x.id===c.id);if(i>=0)mem.cases[i].categories=newCats;}
-  }
-  await deleteCategoryDB(id);categories=await getCategories();showToast('Deleted');renderBrowse();
-}
 
-/* ================================================================
-   TAB 3: ANALYTICS
-   ================================================================ */
-function isWeekdayIncluded(dateStr){
-  const dow=new Date(dateStr+'T12:00:00').getDay(); // 0=Sun,6=Sat
-  if(selectedWeekday==='mon-fri')return dow>=1&&dow<=5;
-  if(selectedWeekday==='mon-sat')return dow>=1&&dow<=6;
-  return true;
-}
-function renderWeekdayFilter(){
-  $('weekdayFilter').innerHTML=WEEKDAY_OPTIONS.map(o=>`<button class="weekday-btn ${o.key===selectedWeekday?'active':''}" data-wk="${o.key}">${o.label}</button>`).join('');
-}
-async function renderAnalytics(){
-  renderWeekdayFilter();
-  let range;
-  if(selectedPeriod==='custom'){range={start:$('anStart').value||todayStr(),end:$('anEnd').value||todayStr()};}
-  else{range=getRange(selectedPeriod);}
-  const allCases=await getCasesRange(range.start,range.end);
-  const cases=allCases.filter(c=>isWeekdayIncluded(c.date));
-  const allDays=daysBetween(range.start,range.end);
-  const days=allDays.filter(d=>isWeekdayIncluded(d));
-  const total=cases.length;
-  const avg=days.length>0?(total/days.length).toFixed(1):'0';
-  // Peak day
-  const dayMap={};cases.forEach(c=>{dayMap[c.date]=(dayMap[c.date]||0)+1;});
-  let peakMax=0,peakDay='-';
-  Object.entries(dayMap).forEach(([d,n])=>{if(n>peakMax){peakMax=n;peakDay=fmtShort(d);}});
-  $('statsGrid').innerHTML=`<div class="stat-card"><div class="stat-value">${total}</div><div class="stat-label">Total</div></div><div class="stat-card"><div class="stat-value">${avg}</div><div class="stat-label">Daily Avg</div></div><div class="stat-card"><div class="stat-value">${peakMax||0}</div><div class="stat-label">Peak (${peakDay})</div></div>`;
+    async function signOutUser() {
+      if (auth) {
+        await auth.signOut();
+      }
+      document.getElementById('app').style.display = 'none';
+      document.getElementById('loginScreen').classList.remove('hidden');
+      showLoginLoading(false);
+      hideLoginError();
+    }
 
-  // Type chart
-  const typeCounts={};CASE_TYPES.forEach(t=>{typeCounts[t.key]=0;});
-  cases.forEach(c=>{if(typeCounts[c.type]!==undefined)typeCounts[c.type]++;else typeCounts[c.type]=(typeCounts[c.type]||0)+1;});
-  renderTypeChart(typeCounts);
+    // Listen for auth state changes
+    if (auth) {
+      auth.onAuthStateChanged(async (user) => {
+        if (user && user.email.toLowerCase() === ALLOWED_EMAIL.toLowerCase()) {
+          // Authorized — show app
+          document.getElementById('loginScreen').classList.add('hidden');
+          document.getElementById('app').style.display = '';
+          await initApp();
+        } else if (user) {
+          // Wrong account — sign out
+          await auth.signOut();
+          showLoginLoading(false);
+          showLoginError('Access denied. Only ' + ALLOWED_EMAIL + ' can use this app.');
+        } else {
+          // Not signed in — show login
+          document.getElementById('app').style.display = 'none';
+          document.getElementById('loginScreen').classList.remove('hidden');
+          showLoginLoading(false);
+        }
+      });
+    } else {
+      // Firebase not available — skip auth, use memory mode
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('app').style.display = '';
+      usingMemory = true;
+      initApp();
+    }
 
-  // Category chart
-  const catCounts={};
-  cases.forEach(c=>{(c.categories||[]).forEach(cn=>{catCounts[cn]=(catCounts[cn]||0)+1;});});
-  renderCatChart(catCounts);
+    // Bind sign-in button
+    document.getElementById('googleSignInBtn').addEventListener('click', signInWithGoogle);
+    document.getElementById('signOutBtn').addEventListener('click', signOutUser);
 
-  // Daily trend (only included weekdays)
-  const dailyData=days.map(d=>dayMap[d]||0);
-  renderDailyChart(days.map(d=>fmtShort(d)),dailyData);
-}
+    /* ===== DATABASE (Firestore) ===== */
 
-function chartColors(){const dk=document.documentElement.classList.contains('dark');return{text:dk?'#908880':'#7a6f65',grid:dk?'#28283a':'#e0d8ce',primary:dk?'#d48548':'#b85c2f',bg:dk?'rgba(212,133,72,0.25)':'rgba(184,92,47,0.18)'};}
+    /* Daily Counts */
+    async function getCount(date) {
+      if (usingMemory) { const e = mem.dailyCounts.find(c => c.date === date); return e ? e.count : 0; }
+      const snap = await firestore.collection('dailyCounts').doc(date).get();
+      return snap.exists ? snap.data().count : 0;
+    }
+    async function setCount(date, count) {
+      showSyncStatus('saving');
+      if (usingMemory) {
+        mem.dailyCounts = mem.dailyCounts.filter(c => c.date !== date);
+        if (count > 0) mem.dailyCounts.push({ date, count });
+        showSyncStatus('saved');
+        return;
+      }
+      if (count <= 0) {
+        try { await firestore.collection('dailyCounts').doc(date).delete(); } catch (_e) { /* ignore */ }
+      } else {
+        await firestore.collection('dailyCounts').doc(date).set({ date, count });
+      }
+      showSyncStatus('saved');
+    }
+    async function getCountsRange(start, end) {
+      if (usingMemory) return mem.dailyCounts.filter(c => c.date >= start && c.date <= end);
+      const snap = await firestore.collection('dailyCounts')
+        .where('date', '>=', start).where('date', '<=', end).get();
+      return snap.docs.map(d => d.data());
+    }
+    async function getAllCounts() {
+      if (usingMemory) return [...mem.dailyCounts];
+      const snap = await firestore.collection('dailyCounts').get();
+      return snap.docs.map(d => d.data());
+    }
 
-function renderTypeChart(counts){
-  const labels=Object.keys(counts);const data=Object.values(counts);
-  const colors=labels.map(k=>typeInfo(k).color);
-  if(typeChartInst)typeChartInst.destroy();
-  typeChartInst=new Chart($('typeChart'),{type:'doughnut',data:{labels,datasets:[{data,backgroundColor:colors,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:chartColors().text,font:{family:"'DM Sans'",size:11},boxWidth:12,padding:8}}}}});
-}
-function renderCatChart(counts){
-  const cc=chartColors();
-  const labels=Object.keys(counts);const data=Object.values(counts);
-  const colors=labels.map(n=>{const c=catByName(n);return c?c.color:'#78909c';});
-  if(catChartInst)catChartInst.destroy();
-  if(labels.length===0){$('catChart').parentElement.querySelector('canvas').style.display='none';return;}
-  $('catChart').style.display='';
-  catChartInst=new Chart($('catChart'),{type:'bar',data:{labels,datasets:[{data,backgroundColor:colors,borderRadius:5,maxBarThickness:28}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,ticks:{stepSize:1,color:cc.text,font:{family:"'DM Sans'"}},grid:{color:cc.grid}},y:{grid:{display:false},ticks:{color:cc.text,font:{family:"'DM Sans'",size:11}}}}}});
-}
-function renderDailyChart(labels,data){
-  const c=chartColors();
-  if(dailyChartInst)dailyChartInst.destroy();
-  dailyChartInst=new Chart($('dailyChart'),{type:'bar',data:{labels,datasets:[{data,backgroundColor:c.bg,borderColor:c.primary,borderWidth:2,borderRadius:5,maxBarThickness:28}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:1,color:c.text,font:{family:"'DM Sans'"}},grid:{color:c.grid}},x:{grid:{display:false},ticks:{color:c.text,maxTicksLimit:8,maxRotation:0,font:{size:10,family:"'DM Sans'"}}}}}});
-}
-function renderPeriodSelector(){$('periodSel').innerHTML=PERIODS.map(p=>`<button class="period-btn ${p.key===selectedPeriod?'active':''}" data-period="${p.key}">${p.label}</button>`).join('');}
+    /* Records */
+    async function addRecord(rec) {
+      showSyncStatus('saving');
+      if (usingMemory) { rec.id = String(mem.nextId++); mem.records.push(rec); showSyncStatus('saved'); return rec.id; }
+      const ref = await firestore.collection('records').add(rec);
+      showSyncStatus('saved');
+      return ref.id;
+    }
+    async function deleteRecord(id) {
+      showSyncStatus('saving');
+      if (usingMemory) { mem.records = mem.records.filter(r => r.id !== id); showSyncStatus('saved'); return; }
+      await firestore.collection('records').doc(id).delete();
+      showSyncStatus('saved');
+    }
+    async function getRecordsByCat(cat, startD, endD) {
+      let all;
+      if (usingMemory) {
+        all = mem.records.filter(r => r.category === cat);
+      } else {
+        const snap = await firestore.collection('records').where('category', '==', cat).get();
+        all = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      }
+      if (startD) all = all.filter(r => r.date >= startD);
+      if (endD) all = all.filter(r => r.date <= endD);
+      return all.sort((a, b) => b.date.localeCompare(a.date));
+    }
+    async function countRecordsByCat(cat) {
+      if (usingMemory) return mem.records.filter(r => r.category === cat).length;
+      const snap = await firestore.collection('records').where('category', '==', cat).get();
+      return snap.size;
+    }
+    async function getAllRecords() {
+      if (usingMemory) return [...mem.records];
+      const snap = await firestore.collection('records').get();
+      return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    }
+    async function deleteRecordsByCat(cat) {
+      if (usingMemory) { mem.records = mem.records.filter(r => r.category !== cat); return; }
+      const snap = await firestore.collection('records').where('category', '==', cat).get();
+      for (const d of snap.docs) await d.ref.delete();
+    }
 
-/* ===== NAVIGATION ===== */
-function switchTab(tab){
-  currentTab=tab;
-  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
-  $('tab-'+tab).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.tab===tab));
-  if(tab==='cases')renderCases();else if(tab==='browse')renderBrowse();else if(tab==='analytics')renderAnalytics();
-}
+    /* Categories */
+    async function getCategories() {
+      if (usingMemory) return [...mem.categories];
+      const snap = await firestore.collection('categories').orderBy('name').get();
+      return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    }
+    async function addCategory(cat) {
+      showSyncStatus('saving');
+      if (usingMemory) { cat.id = String(mem.nextId++); mem.categories.push(cat); showSyncStatus('saved'); return cat.id; }
+      const ref = await firestore.collection('categories').add({ name: cat.name, color: cat.color });
+      showSyncStatus('saved');
+      return ref.id;
+    }
+    async function updateCategory(cat) {
+      showSyncStatus('saving');
+      if (usingMemory) { const i = mem.categories.findIndex(c => c.id === cat.id); if (i >= 0) mem.categories[i] = cat; showSyncStatus('saved'); return; }
+      await firestore.collection('categories').doc(cat.id).set({ name: cat.name, color: cat.color });
+      showSyncStatus('saved');
+    }
+    async function deleteCategoryDB(id) {
+      showSyncStatus('saving');
+      if (usingMemory) { mem.categories = mem.categories.filter(c => c.id !== id); showSyncStatus('saved'); return; }
+      await firestore.collection('categories').doc(id).delete();
+      showSyncStatus('saved');
+    }
+    async function clearAllData() {
+      if (usingMemory) { mem.dailyCounts = []; mem.records = []; mem.categories = []; return; }
+      for (const col of ['dailyCounts', 'records', 'categories']) {
+        const snap = await firestore.collection(col).get();
+        for (const d of snap.docs) await d.ref.delete();
+      }
+    }
 
-/* ===== EXPORT / IMPORT ===== */
-async function exportData(){
-  const payload={version:3,exportDate:new Date().toISOString(),cases:await getAllCases(),categories:await getCategories()};
-  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
-  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='caselog-'+todayStr()+'.json';a.click();URL.revokeObjectURL(url);showToast('Exported');
-}
-async function importData(file){
-  try{const data=JSON.parse(await file.text());
-    if(!data.cases&&!data.categories){showToast('Invalid file');return;}
-    const ok=await showConfirm('Replace all current data with imported data?');if(!ok)return;
-    await clearAllData();
-    if(data.categories)for(const c of data.categories)await addCategory({name:c.name,color:c.color});
-    if(data.cases)for(const c of data.cases)await addCase({caseNum:c.caseNum,date:c.date,type:c.type,status:c.status||'Active',categories:c.categories||[],notes:c.notes||'',createdAt:c.createdAt});
-    categories=await getCategories();showToast('Imported');switchTab(currentTab);
-  }catch(_e){showToast('Import failed');}
-}
+    /* ===== STATE ===== */
+    let categories = [];
+    let currentTab = 'counter';
+    let counterDate = todayStr();
+    let selectedPeriod = 'week';
+    let selectedCatId = null;
+    let editingCatId = null;
+    let selectedCatColor = COLORS[0];
+    let recFilterFrom = '';
+    let recFilterTo = '';
+    let dailyChartInst = null;
+    let confirmResolve = null;
+    let appInitialized = false;
+    let recStatus = 'active';
 
-/* ===== EVENT LISTENERS ===== */
-document.querySelectorAll('.nav-item').forEach(btn=>{btn.addEventListener('click',()=>switchTab(btn.dataset.tab));});
-$('cPrev').addEventListener('click',()=>{caseDate=addDays(caseDate,-1);$('cDate').value=caseDate;renderCases();});
-$('cNext').addEventListener('click',()=>{caseDate=addDays(caseDate,1);$('cDate').value=caseDate;renderCases();});
-$('cDate').addEventListener('change',()=>{caseDate=$('cDate').value||todayStr();renderCases();});
-$('cToday').addEventListener('click',()=>{caseDate=todayStr();$('cDate').value=caseDate;renderCases();});
-$('addCaseBtn').addEventListener('click',openNewCase);
-$('saveCaseBtn').addEventListener('click',saveCaseFromModal);
-$('saveCatBtn').addEventListener('click',saveCategory);
-$('newCatSave').addEventListener('click',saveNewCatInline);
-$('newCatInput').addEventListener('keydown',e=>{if(e.key==='Enter')saveNewCatInline();});
-$('bFrom').addEventListener('change',e=>{bFilterFrom=e.target.value;renderBrowse();});
-$('bTo').addEventListener('change',e=>{bFilterTo=e.target.value;renderBrowse();});
-$('bClear').addEventListener('click',()=>{bFilterFrom='';bFilterTo='';$('bFrom').value='';$('bTo').value='';bFilterTypes.clear();bFilterCats.clear();renderBrowse();});
-$('periodSel').addEventListener('click',e=>{const btn=e.target.closest('.period-btn');if(!btn)return;selectedPeriod=btn.dataset.period;renderPeriodSelector();if(selectedPeriod==='custom')$('customRange').classList.add('show');else{$('customRange').classList.remove('show');renderAnalytics();}});
-$('anStart').addEventListener('change',()=>{if(selectedPeriod==='custom')renderAnalytics();});
-$('anEnd').addEventListener('change',()=>{if(selectedPeriod==='custom')renderAnalytics();});
-$('weekdayFilter').addEventListener('click',e=>{const btn=e.target.closest('.weekday-btn');if(!btn)return;selectedWeekday=btn.dataset.wk;renderAnalytics();});
-document.querySelectorAll('.modal-close').forEach(btn=>{btn.addEventListener('click',()=>{hideModal(btn.dataset.modal);$('newCatRow').style.display='none';});});
-document.querySelectorAll('.modal-overlay').forEach(ov=>{ov.addEventListener('click',e=>{if(e.target===ov){hideModal(ov.id);$('newCatRow').style.display='none';}});});
-$('confirmYes').addEventListener('click',()=>{hideModal('confirmModal');if(confirmResolve)confirmResolve(true);});
-$('confirmNo').addEventListener('click',()=>{hideModal('confirmModal');if(confirmResolve)confirmResolve(false);});
-$('exportBtn').addEventListener('click',exportData);
-$('importBtn').addEventListener('click',()=>$('importFile').click());
-$('importFile').addEventListener('change',e=>{if(e.target.files[0])importData(e.target.files[0]);e.target.value='';});
+    /* ===== DATE HELPERS ===== */
+    function todayStr() { return new Date().toISOString().split('T')[0]; }
+    function fmtDate(d) { return new Date(d + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }); }
+    function fmtShort(d) { return new Date(d + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' }); }
+    function addDays(d, n) { const dt = new Date(d + 'T12:00:00'); dt.setDate(dt.getDate() + n); return dt.toISOString().split('T')[0]; }
+    function getWeekStart(d) { const dow = new Date(d + 'T12:00:00').getDay(); return addDays(d, -(dow === 0 ? 6 : dow - 1)); }
+    function daysBetween(s, e) { const a = []; let c = s; while (c <= e) { a.push(c); c = addDays(c, 1); } return a; }
+    function getRange(p) {
+      const t = todayStr();
+      const ws = getWeekStart(t);
+      switch (p) {
+        case 'week': return { start: ws, end: addDays(ws, 6) };
+        case 'weekMF': return { start: ws, end: addDays(ws, 4) }; // Mon-Fri
+        case 'weekMS': return { start: ws, end: addDays(ws, 5) }; // Mon-Sat
+        case 'month': return { start: t.slice(0, 8) + '01', end: t };
+        case '30days': return { start: addDays(t, -29), end: t };
+        case 'year': return { start: t.slice(0, 5) + '01-01', end: t };
+        default: return { start: t, end: t };
+      }
+    }
 
-/* ===== INIT ===== */
-async function initApp(){
-  if(appInitialized)return;appInitialized=true;
-  $('headerDate').textContent=fmtDate(todayStr());
-  $('cDate').value=caseDate;
-  const r=getRange('week');$('anStart').value=r.start;$('anEnd').value=r.end;
-  renderPeriodSelector();
-  if(firestore){try{await firestore.enablePersistence();}catch(_e){}}
-  if(!firestore){usingMemory=true;$('storageWarn').innerHTML='<div class="storage-warn"><i class="fas fa-exclamation-triangle"></i> Firebase unavailable. Data will be lost on refresh.</div>';}
-  try{categories=await getCategories();}catch(_e){categories=[];}
-  renderCases();
-}
-</script>
+    /* ===== UTILS ===== */
+    function $(id) { return document.getElementById(id); }
+    function escHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+    function showToast(msg) { const t = $('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000); }
+
+    /* Cloud sync indicator */
+    let syncTimer = null;
+    function showSyncStatus(status) {
+      const el = $('syncIndicator');
+      const txt = $('syncText');
+      if (!el || !txt) return;
+      el.classList.remove('saving');
+      if (status === 'saving') {
+        txt.textContent = 'Saving...';
+        el.querySelector('i').className = 'fas fa-cloud-upload-alt';
+        el.classList.add('saving');
+      } else {
+        txt.textContent = 'Saved';
+        el.querySelector('i').className = 'fas fa-cloud';
+      }
+      el.classList.add('show');
+      clearTimeout(syncTimer);
+      if (status === 'saved') {
+        syncTimer = setTimeout(() => el.classList.remove('show'), 2500);
+      }
+    }
+
+    /* Debounce helper */
+    function debounce(fn, ms) {
+      let timer;
+      return function(...args) { clearTimeout(timer); timer = setTimeout(() => fn.apply(this, args), ms); };
+    }
+    function showModal(id) { $(id).classList.add('show'); }
+    function hideModal(id) { $(id).classList.remove('show'); }
+    function showConfirm(msg) {
+      return new Promise(resolve => {
+        $('confirmMsg').textContent = msg;
+        showModal('confirmModal');
+        confirmResolve = resolve;
+      });
+    }
+    function floatPlus(x, y, text) {
+      const el = document.createElement('div');
+      el.className = 'float-plus';
+      el.textContent = text;
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 800);
+    }
+
+    /* ===== NAVIGATION ===== */
+    function switchTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      $('tab-' + tab).classList.add('active');
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.toggle('active', n.dataset.tab === tab));
+      if (tab === 'counter') renderCounter();
+      else if (tab === 'records') renderRecordsTab();
+      else if (tab === 'analytics') renderAnalytics();
+    }
+
+    /* ================================================================
+       COUNTER TAB
+       ================================================================ */
+    async function renderCounter() {
+      const count = await getCount(counterDate);
+      const input = $('cInput');
+      input.value = count;
+      updateInputWidth();
+
+      const isToday = counterDate === todayStr();
+      $('cToday').classList.toggle('show', !isToday);
+      $('cLabel').textContent = isToday ? 'today' : 'on ' + fmtShort(counterDate);
+
+      await renderWeekSummary();
+    }
+
+    function updateInputWidth() {
+      const input = $('cInput');
+      const len = Math.max(1, String(input.value).length);
+      input.style.width = Math.max(2, len + 0.6) + 'ch';
+    }
+
+    async function adjustCount(delta) {
+      const cur = await getCount(counterDate);
+      const next = Math.max(0, cur + delta);
+      await setCount(counterDate, next);
+      $('cInput').value = next;
+      updateInputWidth();
+
+      // Animate
+      const input = $('cInput');
+      input.classList.remove('pop');
+      void input.offsetWidth;
+      input.classList.add('pop');
+
+      if (delta > 0) {
+        const rect = input.getBoundingClientRect();
+        floatPlus(rect.right + 2, rect.top, '+1');
+      }
+      await renderWeekSummary();
+    }
+
+    async function setCountFromInput() {
+      const val = Math.max(0, parseInt($('cInput').value) || 0);
+      $('cInput').value = val;
+      updateInputWidth();
+      await setCount(counterDate, val);
+      await renderWeekSummary();
+    }
+
+    async function renderWeekSummary() {
+      const ws = getWeekStart(counterDate);
+      const days = [];
+      for (let i = 0; i < 7; i++) days.push(addDays(ws, i));
+
+      const counts = await getCountsRange(ws, addDays(ws, 6));
+      const countMap = {};
+      counts.forEach(c => { countMap[c.date] = c.count; });
+      const maxC = Math.max(1, ...Object.values(countMap));
+
+      const t = todayStr();
+      $('weekTitle').textContent = ws === getWeekStart(t) ? 'This Week' : 'Week of ' + fmtShort(ws);
+
+      $('weekRows').innerHTML = days.map((d, i) => {
+        const cnt = countMap[d] || 0;
+        const pct = maxC > 0 ? (cnt / maxC * 100) : 0;
+        const isSel = d === counterDate;
+        const dayNum = d.split('-')[2];
+        return `<div class="week-row ${isSel ? 'is-selected' : ''}">
+          <span class="week-day">${DAY_NAMES[i]}</span>
+          <span class="week-date">${dayNum}</span>
+          <div class="week-bar-bg"><div class="week-bar" style="width:${pct}%"></div></div>
+          <span class="week-count">${cnt || '\u2013'}</span>
+        </div>`;
+      }).join('');
+    }
+
+    /* ================================================================
+       RECORDS TAB
+       ================================================================ */
+    async function renderRecordsTab() {
+      categories = await getCategories();
+      const grid = $('catGrid');
+
+      // Build category cards
+      let html = '';
+      for (const c of categories) {
+        const cnt = await countRecordsByCat(c.name);
+        const sel = selectedCatId === c.id ? 'selected' : '';
+        html += `<div class="cat-card ${sel}" data-id="${c.id}">
+          <span class="cat-card-dot" style="background:${c.color}"></span>
+          ${escHtml(c.name)}<span class="cat-card-count">${cnt}</span>
+        </div>`;
+      }
+      html += '<button class="add-cat-chip" id="addCatChip"><i class="fas fa-plus"></i> Add</button>';
+      grid.innerHTML = html;
+
+      // Bind category card clicks
+      grid.querySelectorAll('.cat-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const id = card.dataset.id;
+          selectedCatId = selectedCatId === id ? null : id;
+          renderRecordsTab();
+        });
+      });
+      const addBtn = $('addCatChip');
+      if (addBtn) addBtn.addEventListener('click', showAddCategoryModal);
+
+      // Records panel
+      const panel = $('recPanel');
+      if (!selectedCatId) {
+        panel.innerHTML = categories.length === 0
+          ? '<div class="empty-state"><i class="fas fa-tags"></i><p>Create categories to start<br>recording cases.</p></div>'
+          : '<div class="empty-state"><i class="fas fa-hand-pointer"></i><p>Select a category above<br>to view its records.</p></div>';
+        return;
+      }
+
+      const cat = categories.find(c => c.id === selectedCatId);
+      if (!cat) { panel.innerHTML = ''; return; }
+      const recs = await getRecordsByCat(cat.name, recFilterFrom || null, recFilterTo || null);
+
+      panel.innerHTML = `
+        <div class="records-panel">
+          <div class="rec-panel-header">
+            <div class="rec-panel-title">
+              <span class="cat-dot" style="background:${cat.color}"></span>
+              ${escHtml(cat.name)}
+              <span class="rec-count-badge">(${recs.length} record${recs.length !== 1 ? 's' : ''})</span>
+            </div>
+            <div class="rec-panel-actions">
+              <button id="editCatBtn" title="Edit category"><i class="fas fa-pen"></i></button>
+              <button id="delCatBtn" class="del" title="Delete category"><i class="fas fa-trash-alt"></i></button>
+            </div>
+          </div>
+          <div class="range-row">
+            <label>From</label>
+            <input type="date" class="range-input" id="rFrom" value="${recFilterFrom}">
+            <label>To</label>
+            <input type="date" class="range-input" id="rTo" value="${recFilterTo}">
+            <button class="range-clear" id="rClear">All</button>
+          </div>
+          <div id="recList">${recs.length === 0
+            ? '<div class="empty-state" style="padding:24px 0"><i class="fas fa-folder-open"></i><p>No records yet' + (recFilterFrom || recFilterTo ? ' in this range' : '') + '.</p></div>'
+            : recs.map(r => recCardHTML(r, cat.color)).join('')
+          }</div>
+          <button class="add-rec-btn" id="addRecBtn"><i class="fas fa-plus"></i> Add Record</button>
+        </div>`;
+
+      // Bind panel events
+      $('editCatBtn').addEventListener('click', () => editCategoryModal(cat));
+      $('delCatBtn').addEventListener('click', () => deleteCategoryPrompt(cat));
+      $('rFrom').addEventListener('change', e => { recFilterFrom = e.target.value; renderRecordsTab(); });
+      $('rTo').addEventListener('change', e => { recFilterTo = e.target.value; renderRecordsTab(); });
+      $('rClear').addEventListener('click', () => { recFilterFrom = ''; recFilterTo = ''; renderRecordsTab(); });
+      $('addRecBtn').addEventListener('click', showAddRecordModal);
+
+      // Bind delete buttons on record cards
+      $('recList').querySelectorAll('.rec-del').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const ok = await showConfirm('Remove this record?');
+          if (!ok) return;
+          await deleteRecord(btn.dataset.id);
+          showToast('Record removed');
+          renderRecordsTab();
+        });
+      });
+    }
+
+    function recCardHTML(r, color) {
+      const isActive = r.status !== 'inactive';
+      const statusCls = isActive ? 'is-active' : 'is-inactive';
+      const statusLabel = isActive ? 'Active' : 'Inactive';
+      const dotColor = isActive ? '#2daa6e' : '#a0a0a0';
+      return `<div class="rec-card">
+        <div class="rec-color-bar" style="background:${color}"></div>
+        <div class="rec-info">
+          <div class="rec-num">${escHtml(r.caseNum || '(no reference)')}</div>
+          <div class="rec-meta">${fmtShort(r.date)}</div>
+          ${r.note ? '<div class="rec-note">' + escHtml(r.note) + '</div>' : ''}
+        </div>
+        <span class="rec-status ${statusCls}"><span style="width:6px;height:6px;border-radius:50%;background:${dotColor};display:inline-block"></span>${statusLabel}</span>
+        <button class="rec-del" data-id="${r.id}" title="Delete"><i class="fas fa-trash-alt"></i></button>
+      </div>`;
+    }
+
+    /* ===== RECORD MODAL ===== */
+    function showAddRecordModal() {
+      $('recNumInput').value = '';
+      $('recDateInput').value = todayStr();
+      $('recNoteInput').value = '';
+      recStatus = 'active';
+      updateStatusToggle();
+      showModal('recModal');
+      setTimeout(() => $('recNumInput').focus(), 300);
+    }
+
+    function updateStatusToggle() {
+      const btns = $('recStatusToggle').querySelectorAll('.status-opt');
+      btns.forEach(b => {
+        b.classList.remove('sel-active', 'sel-inactive');
+        if (b.dataset.val === recStatus) {
+          b.classList.add(recStatus === 'active' ? 'sel-active' : 'sel-inactive');
+        }
+      });
+    }
+
+    async function saveRecord() {
+      const cat = categories.find(c => c.id === selectedCatId);
+      if (!cat) return;
+      const caseNum = $('recNumInput').value.trim();
+      const date = $('recDateInput').value || todayStr();
+      const note = $('recNoteInput').value.trim();
+      await addRecord({ caseNum, category: cat.name, date, note, status: recStatus, createdAt: new Date().toISOString() });
+      hideModal('recModal');
+      showToast('Record saved');
+      renderRecordsTab();
+    }
+
+    /* ===== CATEGORY MODAL ===== */
+    function showAddCategoryModal() {
+      editingCatId = null;
+      $('catModalTitle').textContent = 'Add Category';
+      $('catNameInput').value = '';
+      selectedCatColor = COLORS[0];
+      renderColorGrid();
+      showModal('catModal');
+      setTimeout(() => $('catNameInput').focus(), 300);
+    }
+
+    function editCategoryModal(cat) {
+      editingCatId = cat.id;
+      $('catModalTitle').textContent = 'Edit Category';
+      $('catNameInput').value = cat.name;
+      selectedCatColor = cat.color;
+      renderColorGrid();
+      showModal('catModal');
+    }
+
+    function renderColorGrid() {
+      const grid = $('colorGrid');
+      grid.innerHTML = COLORS.map(c =>
+        `<div class="color-swatch ${c === selectedCatColor ? 'selected' : ''}" style="background:${c}" data-color="${c}"></div>`
+      ).join('');
+      grid.querySelectorAll('.color-swatch').forEach(sw => {
+        sw.addEventListener('click', () => { selectedCatColor = sw.dataset.color; renderColorGrid(); });
+      });
+    }
+
+    async function saveCategory() {
+      const name = $('catNameInput').value.trim();
+      if (!name) { showToast('Please enter a name'); return; }
+      const dup = categories.find(c => c.name.toLowerCase() === name.toLowerCase() && c.id !== editingCatId);
+      if (dup) { showToast('Category already exists'); return; }
+      if (editingCatId) {
+        const old = categories.find(c => c.id === editingCatId);
+        if (old && old.name !== name) {
+          // Update records with old category name
+          const recs = await getRecordsByCat(old.name);
+          for (const r of recs) {
+            if (!usingMemory) {
+              await firestore.collection('records').doc(r.id).update({ category: name });
+            } else {
+              const idx = mem.records.findIndex(mr => mr.id === r.id);
+              if (idx >= 0) mem.records[idx].category = name;
+            }
+          }
+        }
+        await updateCategory({ id: editingCatId, name, color: selectedCatColor });
+      } else {
+        await addCategory({ name, color: selectedCatColor });
+      }
+      hideModal('catModal');
+      categories = await getCategories();
+      showToast(editingCatId ? 'Category updated' : 'Category created');
+      renderRecordsTab();
+    }
+
+    async function deleteCategoryPrompt(cat) {
+      const cnt = await countRecordsByCat(cat.name);
+      const msg = cnt > 0
+        ? `Delete "${cat.name}" and its ${cnt} record${cnt !== 1 ? 's' : ''}?`
+        : `Delete category "${cat.name}"?`;
+      const ok = await showConfirm(msg);
+      if (!ok) return;
+      await deleteRecordsByCat(cat.name);
+      await deleteCategoryDB(cat.id);
+      selectedCatId = null;
+      categories = await getCategories();
+      showToast('Category deleted');
+      renderRecordsTab();
+    }
+
+    /* ================================================================
+       ANALYTICS TAB
+       ================================================================ */
+    async function renderAnalytics() {
+      let range;
+      if (selectedPeriod === 'custom') {
+        range = { start: $('anStart').value || todayStr(), end: $('anEnd').value || todayStr() };
+      } else {
+        range = getRange(selectedPeriod);
+      }
+      const counts = await getCountsRange(range.start, range.end);
+      const countMap = {};
+      counts.forEach(c => { countMap[c.date] = c.count; });
+
+      const days = daysBetween(range.start, range.end);
+      const total = counts.reduce((s, c) => s + c.count, 0);
+      const avg = days.length > 0 ? (total / days.length).toFixed(1) : '0';
+      let peakMax = 0;
+      let peakDay = '-';
+      counts.forEach(c => { if (c.count > peakMax) { peakMax = c.count; peakDay = fmtShort(c.date); } });
+
+      $('statsGrid').innerHTML = `
+        <div class="stat-card"><div class="stat-value">${total}</div><div class="stat-label">Total</div></div>
+        <div class="stat-card"><div class="stat-value">${avg}</div><div class="stat-label">Daily Avg</div></div>
+        <div class="stat-card"><div class="stat-value">${peakMax || 0}</div><div class="stat-label">Peak (${peakDay})</div></div>`;
+
+      const labels = days.map(d => fmtShort(d));
+      const data = days.map(d => countMap[d] || 0);
+      renderDailyChart(labels, data);
+    }
+
+    function getChartColors() {
+      const dk = document.documentElement.classList.contains('dark');
+      return { text: dk ? '#908880' : '#7a6f65', grid: dk ? '#28283a' : '#e0d8ce', primary: dk ? '#d48548' : '#b85c2f', bg: dk ? 'rgba(212,133,72,0.25)' : 'rgba(184,92,47,0.18)' };
+    }
+
+    function renderDailyChart(labels, data) {
+      const c = getChartColors();
+      if (dailyChartInst) dailyChartInst.destroy();
+      dailyChartInst = new Chart($('dailyChart'), {
+        type: 'bar',
+        data: { labels, datasets: [{ data, backgroundColor: c.bg, borderColor: c.primary, borderWidth: 2, borderRadius: 5, maxBarThickness: 28 }] },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { beginAtZero: true, ticks: { stepSize: 1, color: c.text, font: { family: "'DM Sans'" } }, grid: { color: c.grid } },
+            x: { grid: { display: false }, ticks: { color: c.text, maxTicksLimit: 8, maxRotation: 0, font: { size: 10, family: "'DM Sans'" } } }
+          }
+        }
+      });
+    }
+
+    function renderPeriodSelector() {
+      $('periodSel').innerHTML = PERIODS.map(p =>
+        `<button class="period-btn ${p.key === selectedPeriod ? 'active' : ''}" data-period="${p.key}">${p.label}</button>`
+      ).join('');
+    }
+
+    /* ===== EXPORT / IMPORT ===== */
+    async function exportData() {
+      const payload = {
+        version: 2,
+        exportDate: new Date().toISOString(),
+        dailyCounts: await getAllCounts(),
+        records: await getAllRecords(),
+        categories: await getCategories()
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'caselog-' + todayStr() + '.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Data exported');
+    }
+
+    async function importData(file) {
+      try {
+        const data = JSON.parse(await file.text());
+        if (!data.dailyCounts && !data.records && !data.categories) { showToast('Invalid file'); return; }
+        const ok = await showConfirm('Replace all current data with imported data?');
+        if (!ok) return;
+        await clearAllData();
+        if (data.categories) for (const c of data.categories) await addCategory({ name: c.name, color: c.color });
+        if (data.dailyCounts) for (const c of data.dailyCounts) await setCount(c.date, c.count);
+        if (data.records) for (const r of data.records) await addRecord({ caseNum: r.caseNum, category: r.category, date: r.date, note: r.note, status: r.status || 'active', createdAt: r.createdAt });
+        categories = await getCategories();
+        showToast('Imported successfully');
+        switchTab(currentTab);
+      } catch (_e) { showToast('Import failed: invalid file'); }
+    }
+
+    /* ===== EVENT LISTENERS (attach immediately) ===== */
+    // Nav
+    document.querySelectorAll('.nav-item').forEach(btn => {
+      btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    });
+
+    // Counter date nav
+    $('cPrev').addEventListener('click', () => { counterDate = addDays(counterDate, -1); $('cDate').value = counterDate; renderCounter(); });
+    $('cNext').addEventListener('click', () => { counterDate = addDays(counterDate, 1); $('cDate').value = counterDate; renderCounter(); });
+    $('cDate').addEventListener('change', () => { counterDate = $('cDate').value || todayStr(); renderCounter(); });
+    $('cToday').addEventListener('click', () => { counterDate = todayStr(); $('cDate').value = counterDate; renderCounter(); });
+
+    // Counter +/-
+    $('cPlus').addEventListener('click', () => adjustCount(1));
+    $('cMinus').addEventListener('click', () => adjustCount(-1));
+    const debouncedSaveCount = debounce(setCountFromInput, 600);
+    $('cInput').addEventListener('input', () => { updateInputWidth(); debouncedSaveCount(); });
+    $('cInput').addEventListener('focus', () => $('cInput').select());
+
+    // Period selector
+    $('periodSel').addEventListener('click', e => {
+      const btn = e.target.closest('.period-btn');
+      if (!btn) return;
+      selectedPeriod = btn.dataset.period;
+      renderPeriodSelector();
+      const cr = $('customRange');
+      if (selectedPeriod === 'custom') { cr.classList.add('show'); }
+      else { cr.classList.remove('show'); renderAnalytics(); }
+    });
+    $('anStart').addEventListener('change', () => { if (selectedPeriod === 'custom') renderAnalytics(); });
+    $('anEnd').addEventListener('change', () => { if (selectedPeriod === 'custom') renderAnalytics(); });
+
+    // Status toggle in record modal
+    $('recStatusToggle').addEventListener('click', e => {
+      const btn = e.target.closest('.status-opt');
+      if (!btn) return;
+      recStatus = btn.dataset.val;
+      updateStatusToggle();
+    });
+
+    // Save record
+    $('saveRecBtn').addEventListener('click', saveRecord);
+
+    // Save category
+    $('saveCatBtn').addEventListener('click', saveCategory);
+
+    // Modal closes
+    document.querySelectorAll('.modal-close').forEach(btn => {
+      btn.addEventListener('click', () => hideModal(btn.dataset.modal));
+    });
+    document.querySelectorAll('.modal-overlay').forEach(ov => {
+      ov.addEventListener('click', e => { if (e.target === ov) hideModal(ov.id); });
+    });
+
+    // Confirm
+    $('confirmYes').addEventListener('click', () => { hideModal('confirmModal'); if (confirmResolve) confirmResolve(true); });
+    $('confirmNo').addEventListener('click', () => { hideModal('confirmModal'); if (confirmResolve) confirmResolve(false); });
+
+    // Export / Import
+    $('exportBtn').addEventListener('click', exportData);
+    $('importBtn').addEventListener('click', () => $('importFile').click());
+    $('importFile').addEventListener('change', e => { if (e.target.files[0]) importData(e.target.files[0]); e.target.value = ''; });
+
+    /* ===== INIT APP (called after successful auth) ===== */
+    async function initApp() {
+      if (appInitialized) return;
+      appInitialized = true;
+
+      // Set up UI defaults
+      $('headerDate').textContent = fmtDate(todayStr());
+      $('cDate').value = counterDate;
+      const r = getRange('week');
+      $('anStart').value = r.start;
+      $('anEnd').value = r.end;
+      renderPeriodSelector();
+      updateInputWidth();
+
+      // Enable Firestore persistence
+      if (firestore) {
+        try { await firestore.enablePersistence(); } catch (_e) { /* offline cache may not work */ }
+      }
+
+      if (!firestore) {
+        usingMemory = true;
+        $('storageWarn').innerHTML = '<div class="storage-warn"><i class="fas fa-exclamation-triangle"></i> Firebase unavailable. Data will be lost on refresh. Use Export to save.</div>';
+      }
+
+      // Load data and render
+      try {
+        categories = await getCategories();
+      } catch (_e) {
+        categories = [];
+      }
+      renderCounter();
+    }
+  </script>
 </body>
 </html>
