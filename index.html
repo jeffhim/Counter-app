@@ -222,6 +222,16 @@
     .chart-card h3{font-size:13px;font-weight:700;margin-bottom:12px}
     .chart-wrap{position:relative;height:200px}
 
+    /* Target banner */
+    .target-banner{border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:14px;display:flex;align-items:flex-start;gap:10px}
+    .target-banner.on-track{background:var(--accent-light);border:1.5px solid var(--accent)}
+    .target-banner.needs-work{background:var(--warn-light);border:1.5px solid var(--warn)}
+    .target-banner.achieved{background:var(--accent-light);border:1.5px solid var(--accent)}
+    .target-icon{font-size:20px;flex-shrink:0;line-height:1}
+    .target-text{font-size:13px;font-weight:600;color:var(--text);line-height:1.5}
+    .target-num{font-family:'Fraunces',serif;font-size:24px;font-weight:900;color:var(--primary);vertical-align:baseline}
+    .target-sub{display:block;font-size:11px;color:var(--text-sec);font-weight:500;margin-top:2px}
+
     /* Period navigation (swipe) */
     .period-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:16px;user-select:none}
     .period-nav-btn{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);background:var(--bg-card);color:var(--text);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
@@ -356,6 +366,7 @@
         </div>
         <div id="anContent">
         <div class="stats-grid" id="statsGrid"></div>
+        <div id="targetBanner"></div>
         <div class="chart-card">
           <h3>Daily Cases</h3>
           <div class="chart-wrap"><canvas id="dailyChart"></canvas></div>
@@ -1303,6 +1314,46 @@
         '<div class="stat-card"><div class="stat-value">' + total + '</div><div class="stat-label">Total</div></div>'
         + '<div class="stat-card"><div class="stat-value">' + avg + '</div><div class="stat-label">Daily Avg</div></div>'
         + '<div class="stat-card"><div class="stat-value">' + (peakMax || 0) + '</div><div class="stat-label">Peak (' + peakDay + ')</div></div>';
+
+      // Target banner: show for weekMF current week only
+      var tBanner = $('targetBanner');
+      if (tBanner) {
+        if (selectedPeriod === 'weekMF' && periodOffset === 0) {
+          var TARGET_DAILY = 15;
+          var TARGET_TOTAL = TARGET_DAILY * 5; // 75
+          var remaining = Math.max(0, TARGET_TOTAL - total);
+          var todayD = todayStr();
+          var dow = new Date(todayD + 'T12:00:00').getDay(); // 0=Sun,1=Mon...5=Fri,6=Sat
+          var remDays = (dow >= 1 && dow <= 5) ? (6 - dow) : 0; // days left including today: Mon=5,Tue=4,...Fri=1
+
+          if (remaining === 0) {
+            var over = total - TARGET_TOTAL;
+            tBanner.innerHTML = '<div class="target-banner achieved">'
+              + '<span class="target-icon"><i class="fas fa-check-circle" style="color:var(--accent)"></i></span>'
+              + '<div class="target-text">Target reached! <span class="target-num">' + total + '</span> / ' + TARGET_TOTAL
+              + '<span class="target-sub">' + (over > 0 ? over + ' case' + (over !== 1 ? 's' : '') + ' above target \u2014 great work!' : 'Right on target!') + '</span>'
+              + '</div></div>';
+          } else if (remDays === 0) {
+            tBanner.innerHTML = '<div class="target-banner needs-work">'
+              + '<span class="target-icon"><i class="fas fa-calendar-xmark" style="color:var(--warn)"></i></span>'
+              + '<div class="target-text"><span class="target-num">' + remaining + '</span> cases short of target'
+              + '<span class="target-sub">No working days left this week. Target was ' + TARGET_TOTAL + ' (' + TARGET_DAILY + '/day).</span>'
+              + '</div></div>';
+          } else {
+            var perDay = (remaining / remDays);
+            var perDayStr = perDay % 1 === 0 ? String(perDay) : perDay.toFixed(1);
+            var dayNames = ['', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+            var rangeLabel = remDays === 1 ? dayNames[dow] : dayNames[dow] + '\u2013Fri';
+            tBanner.innerHTML = '<div class="target-banner needs-work">'
+              + '<span class="target-icon"><i class="fas fa-bullseye" style="color:var(--warn)"></i></span>'
+              + '<div class="target-text"><span class="target-num">' + remaining + '</span> more cases to go'
+              + '<span class="target-sub">' + perDayStr + ' cases/day needed (' + rangeLabel + ', ' + remDays + ' day' + (remDays !== 1 ? 's' : '') + ') to reach ' + TARGET_DAILY + '/day avg</span>'
+              + '</div></div>';
+          }
+        } else {
+          tBanner.innerHTML = '';
+        }
+      }
 
       const labels = days.map(d => fmtShort(d));
       const data = days.map(d => countMap[d] || 0);
