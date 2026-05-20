@@ -134,7 +134,9 @@
     .fu-alert-banner{background:var(--warn-light);border:1.5px solid var(--warn);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:14px;animation:fadeIn .3s ease}
     .fu-alert-header{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:13px;font-weight:700;color:var(--warn)}
     .fu-alert-header i{font-size:15px}
-    .fu-alert-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid rgba(212,149,32,0.15)}
+    .fu-alert-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid rgba(212,149,32,0.15);cursor:pointer;border-radius:6px;margin:0 -4px;padding-left:4px;padding-right:4px;transition:background .15s}
+    .fu-alert-item:hover{background:rgba(212,149,32,0.08)}
+    .fu-alert-item:active{background:rgba(212,149,32,0.15)}
     .fu-alert-item:first-child{border-top:none;padding-top:0}
     .fu-alert-case{font-size:13px;font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .fu-alert-date{font-size:11px;font-weight:600;color:var(--warn);white-space:nowrap}
@@ -875,6 +877,35 @@
       const recordsEl = $('fuAlertRecords');
       if (counterEl) counterEl.innerHTML = html;
       if (recordsEl) recordsEl.innerHTML = html;
+
+      // Bind click on FU alert items to navigate to that record
+      document.querySelectorAll('.fu-alert-item[data-recid]').forEach(item => {
+        item.addEventListener('click', () => {
+          const recId = item.dataset.recid;
+          const catId = item.dataset.catid;
+          const catName = item.dataset.category;
+          navigateToRecord(recId, catId, catName);
+        });
+      });
+    }
+
+    async function navigateToRecord(recId, catId, catName) {
+      // 1. Switch to Records tab and select the right category
+      selectedCatId = catId;
+      recFilterFrom = '';
+      recFilterTo = '';
+      switchTab('records');
+
+      // 2. Wait for records tab to render, then find and open the record
+      // Need to fetch the record fresh since renderRecordsTab is async
+      await renderRecordsTab();
+
+      // 3. Fetch the record data and open edit modal
+      const allRecs = await getAllRecords();
+      const rec = allRecs.find(r => r.id === recId);
+      if (rec) {
+        showEditRecordModal(rec);
+      }
     }
 
     function buildFuAlertHTML(fuRecs, today, catMap) {
@@ -895,7 +926,8 @@
           cls = '';
         }
         const catColor = catMap[r.category] ? catMap[r.category].color : '#999';
-        return '<div class="fu-alert-item">'
+        const catId = catMap[r.category] ? catMap[r.category].id : '';
+        return '<div class="fu-alert-item" data-recid="' + r.id + '" data-catid="' + catId + '" data-category="' + escHtml(r.category) + '">'
           + '<span style="width:4px;height:22px;border-radius:2px;background:' + catColor + ';flex-shrink:0"></span>'
           + '<div style="flex:1;min-width:0">'
           + '<div class="fu-alert-case">' + escHtml(r.caseNum || '(no ref)') + '</div>'
