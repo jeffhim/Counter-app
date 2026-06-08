@@ -130,6 +130,28 @@
     .week-bar{height:100%;background:linear-gradient(90deg,var(--primary),var(--primary-hover));border-radius:5px;transition:width .5s ease;min-width:0}
     .week-count{width:24px;text-align:right;font-size:12px;font-weight:700;color:var(--text);font-family:'Fraunces',serif}
 
+    /* ===== CHECKLIST ===== */
+    .checklist-section{background:var(--bg-card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-top:14px}
+    .checklist-title{font-size:12px;font-weight:700;color:var(--text-sec);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+    .checklist-input-row{display:flex;gap:8px;margin-bottom:6px}
+    .checklist-input{flex:1;font-family:inherit;font-size:16px;padding:9px 12px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--bg-input);color:var(--text);outline:none;transition:border-color .2s}
+    .checklist-input:focus{border-color:var(--primary)}
+    .checklist-add{width:40px;height:40px;border-radius:var(--radius-sm);border:none;background:var(--primary);color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,transform .1s;flex-shrink:0}
+    .checklist-add:hover{background:var(--primary-hover)}
+    .checklist-add:active{transform:scale(0.92)}
+    .cl-list{list-style:none}
+    .cl-item{display:flex;align-items:center;gap:10px;padding:9px 2px;border-bottom:1px solid var(--border);animation:fadeIn .2s ease}
+    .cl-item:last-child{border-bottom:none}
+    .cl-item.done .cl-text{text-decoration:line-through;color:var(--text-ter)}
+    .cl-cb{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);background:var(--bg-input);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;font-size:11px;color:transparent}
+    .cl-cb:hover{border-color:var(--accent)}
+    .cl-cb.checked{background:var(--accent);border-color:var(--accent);color:#fff}
+    .dark .cl-cb.checked{background:var(--accent);border-color:var(--accent)}
+    .cl-text{flex:1;font-size:14px;min-width:0;word-break:break-word;line-height:1.4;transition:color .2s}
+    .cl-del{background:none;border:none;color:var(--text-ter);font-size:11px;cursor:pointer;padding:4px 6px;border-radius:4px;flex-shrink:0;transition:color .2s}
+    .cl-del:hover{color:var(--danger)}
+    .cl-empty{font-size:12px;color:var(--text-ter);text-align:center;padding:14px 0}
+
     /* ===== FU ALERT BANNER ===== */
     .fu-alert-banner{background:var(--warn-light);border:1.5px solid var(--warn);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:14px;animation:fadeIn .3s ease}
     .fu-alert-header{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:13px;font-weight:700;color:var(--warn)}
@@ -343,6 +365,14 @@
           <div class="week-title" id="weekTitle">This Week</div>
           <div id="weekRows"></div>
         </div>
+        <div class="checklist-section">
+          <div class="checklist-title"><i class="fas fa-list-check"></i> Today's Checklist</div>
+          <div class="checklist-input-row">
+            <input type="text" class="checklist-input" id="clInput" placeholder="Add a task...">
+            <button class="checklist-add" id="clAddBtn"><i class="fas fa-plus"></i></button>
+          </div>
+          <ul class="cl-list" id="clList"></ul>
+        </div>
       </div>
 
       <!-- RECORDS -->
@@ -493,7 +523,7 @@
     let firestore = null;
     let auth = null;
     let usingMemory = false;
-    const mem = { dailyCounts: [], records: [], categories: [], nextId: 1 };
+    const mem = { dailyCounts: [], records: [], categories: [], checklist: [], nextId: 1 };
 
     const firebaseConfig = {
       apiKey: "AIzaSyDXx-Scqt_y8swNOqqIEq-MwInE0gMxfx8",
@@ -713,11 +743,48 @@
       showSyncStatus('saved');
     }
     async function clearAllData() {
-      if (usingMemory) { mem.dailyCounts = []; mem.records = []; mem.categories = []; return; }
-      for (const col of ['dailyCounts', 'records', 'categories']) {
+      if (usingMemory) { mem.dailyCounts = []; mem.records = []; mem.categories = []; mem.checklist = []; return; }
+      for (const col of ['dailyCounts', 'records', 'categories', 'checklist']) {
         const snap = await firestore.collection(col).get();
         for (const d of snap.docs) await d.ref.delete();
       }
+    }
+
+    /* Checklist */
+    async function getChecklistItems(date) {
+      if (usingMemory) return mem.checklist.filter(c => c.createdDate === date);
+      const snap = await firestore.collection('checklist').where('createdDate', '==', date).get();
+      return snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => (a.createdAt || '').localeCompare(b.createdAt || ''));
+    }
+    async function addChecklistItem(item) {
+      showSyncStatus('saving');
+      if (usingMemory) { item.id = String(mem.nextId++); mem.checklist.push(item); showSyncStatus('saved'); return item.id; }
+      const ref = await firestore.collection('checklist').add(item);
+      showSyncStatus('saved');
+      return ref.id;
+    }
+    async function updateChecklistItem(id, data) {
+      showSyncStatus('saving');
+      if (usingMemory) {
+        const idx = mem.checklist.findIndex(c => c.id === id);
+        if (idx >= 0) Object.assign(mem.checklist[idx], data);
+        showSyncStatus('saved');
+        return;
+      }
+      await firestore.collection('checklist').doc(id).update(data);
+      showSyncStatus('saved');
+    }
+    async function deleteChecklistItem(id) {
+      showSyncStatus('saving');
+      if (usingMemory) { mem.checklist = mem.checklist.filter(c => c.id !== id); showSyncStatus('saved'); return; }
+      await firestore.collection('checklist').doc(id).delete();
+      showSyncStatus('saved');
+    }
+    async function cleanOldChecklist() {
+      const today = todayStr();
+      if (usingMemory) { mem.checklist = mem.checklist.filter(c => c.createdDate >= today); return; }
+      const snap = await firestore.collection('checklist').where('createdDate', '<', today).get();
+      for (const d of snap.docs) await d.ref.delete();
     }
 
     /* ===== STATE ===== */
@@ -969,6 +1036,7 @@
 
       await renderWeekSummary();
       renderFuAlerts();
+      renderChecklist();
     }
 
     function updateInputWidth() {
@@ -1029,6 +1097,54 @@
           + '<span class="week-count">' + (cnt || '\u2013') + '</span>'
           + '</div>';
       }).join('');
+    }
+
+    /* ===== CHECKLIST ===== */
+    async function renderChecklist() {
+      await cleanOldChecklist();
+      const today = todayStr();
+      const items = await getChecklistItems(today);
+      const list = $('clList');
+      if (!list) return;
+      if (items.length === 0) {
+        list.innerHTML = '<li class="cl-empty">No tasks yet \u2014 add one above.</li>';
+        return;
+      }
+      list.innerHTML = items.map(function(item) {
+        var doneCls = item.done ? ' done' : '';
+        var cbCls = item.done ? ' checked' : '';
+        return '<li class="cl-item' + doneCls + '">'
+          + '<span class="cl-cb' + cbCls + '" data-clid="' + item.id + '"><i class="fas fa-check"></i></span>'
+          + '<span class="cl-text">' + escHtml(item.text) + '</span>'
+          + '<button class="cl-del" data-clid="' + item.id + '"><i class="fas fa-xmark"></i></button>'
+          + '</li>';
+      }).join('');
+
+      list.querySelectorAll('.cl-cb').forEach(function(cb) {
+        cb.addEventListener('click', async function() {
+          var id = cb.dataset.clid;
+          var item = items.find(function(i) { return i.id === id; });
+          if (item) {
+            await updateChecklistItem(id, { done: !item.done });
+            renderChecklist();
+          }
+        });
+      });
+      list.querySelectorAll('.cl-del').forEach(function(btn) {
+        btn.addEventListener('click', async function() {
+          await deleteChecklistItem(btn.dataset.clid);
+          renderChecklist();
+        });
+      });
+    }
+
+    async function addClFromInput() {
+      var inp = $('clInput');
+      var text = inp.value.trim();
+      if (!text) return;
+      await addChecklistItem({ text: text, done: false, createdDate: todayStr(), createdAt: new Date().toISOString() });
+      inp.value = '';
+      renderChecklist();
     }
 
     /* ================================================================
@@ -1473,6 +1589,10 @@
     const debouncedSaveCount = debounce(setCountFromInput, 600);
     $('cInput').addEventListener('input', () => { updateInputWidth(); debouncedSaveCount(); });
     $('cInput').addEventListener('focus', () => $('cInput').select());
+
+    // Checklist
+    $('clAddBtn').addEventListener('click', addClFromInput);
+    $('clInput').addEventListener('keydown', function(e) { if (e.key === 'Enter') addClFromInput(); });
 
     // Period selector
     $('periodSel').addEventListener('click', e => {
