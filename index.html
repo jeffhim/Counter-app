@@ -366,7 +366,7 @@
           <div id="weekRows"></div>
         </div>
         <div class="checklist-section">
-          <div class="checklist-title"><i class="fas fa-list-check"></i> Today's Checklist</div>
+          <div class="checklist-title"><i class="fas fa-list-check"></i> Checklist</div>
           <div class="checklist-input-row">
             <input type="text" class="checklist-input" id="clInput" placeholder="Add a task...">
             <button class="checklist-add" id="clAddBtn"><i class="fas fa-plus"></i></button>
@@ -455,6 +455,7 @@
         </div>
       </div>
       <div class="modal-footer">
+        <button class="btn btn-danger" id="delRecBtn" style="display:none;margin-bottom:8px"><i class="fas fa-trash-alt" style="margin-right:6px"></i>Delete Record</button>
         <button class="btn btn-primary" id="saveRecBtn">Save Record</button>
       </div>
     </div>
@@ -751,10 +752,10 @@
     }
 
     /* Checklist */
-    async function getChecklistItems(date) {
-      if (usingMemory) return mem.checklist.filter(c => c.createdDate === date);
-      const snap = await firestore.collection('checklist').where('createdDate', '==', date).get();
-      return snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => (a.createdAt || '').localeCompare(b.createdAt || ''));
+    async function getChecklistItems() {
+      if (usingMemory) return [...mem.checklist];
+      const snap = await firestore.collection('checklist').get();
+      return snap.docs.map(d => ({ id: d.id, ...d.data() }));
     }
     async function addChecklistItem(item) {
       showSyncStatus('saving');
@@ -781,10 +782,17 @@
       showSyncStatus('saved');
     }
     async function cleanOldChecklist() {
+      // Only remove checked (done) items from past days; keep unchecked items forever
       const today = todayStr();
-      if (usingMemory) { mem.checklist = mem.checklist.filter(c => c.createdDate >= today); return; }
-      const snap = await firestore.collection('checklist').where('createdDate', '<', today).get();
-      for (const d of snap.docs) await d.ref.delete();
+      if (usingMemory) {
+        mem.checklist = mem.checklist.filter(c => !(c.done && c.createdDate < today));
+        return;
+      }
+      const snap = await firestore.collection('checklist').get();
+      for (const d of snap.docs) {
+        const data = d.data();
+        if (data.done && data.createdDate < today) await d.ref.delete();
+      }
     }
 
     /* ===== STATE ===== */
@@ -1102,8 +1110,12 @@
     /* ===== CHECKLIST ===== */
     async function renderChecklist() {
       await cleanOldChecklist();
-      const today = todayStr();
-      const items = await getChecklistItems(today);
+      const items = await getChecklistItems();
+      // Sort: unchecked first (by creation time), then checked
+      items.sort(function(a, b) {
+        if (a.done !== b.done) return a.done ? 1 : -1;
+        return (a.createdAt || '').localeCompare(b.createdAt || '');
+      });
       const list = $('clList');
       if (!list) return;
       if (items.length === 0) {
@@ -1296,6 +1308,7 @@
       recStatus = 'active';
       updateStatusToggle();
       $('saveRecBtn').textContent = 'Save Record';
+      $('delRecBtn').style.display = 'none';
       showModal('recModal');
       setTimeout(() => $('recNumInput').focus(), 300);
     }
@@ -1310,6 +1323,7 @@
       recStatus = rec.status || 'active';
       updateStatusToggle();
       $('saveRecBtn').textContent = 'Update Record';
+      $('delRecBtn').style.display = '';
       showModal('recModal');
       setTimeout(() => $('recNumInput').focus(), 300);
     }
@@ -1654,6 +1668,19 @@
 
     // Save record
     $('saveRecBtn').addEventListener('click', saveRecord);
+
+    // Delete record from edit modal
+    $('delRecBtn').addEventListener('click', async () => {
+      if (!editingRecId) return;
+      const ok = await showConfirm('Delete this record?');
+      if (!ok) return;
+      await deleteRecord(editingRecId);
+      editingRecId = null;
+      hideModal('recModal');
+      showToast('Record deleted');
+      renderRecordsTab();
+      renderFuAlerts();
+    });
 
     // Save category
     $('saveCatBtn').addEventListener('click', saveCategory);
