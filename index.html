@@ -256,6 +256,16 @@
     .target-num{font-family:'Fraunces',serif;font-size:24px;font-weight:900;color:var(--primary);vertical-align:baseline}
     .target-sub{display:block;font-size:11px;color:var(--text-sec);font-weight:500;margin-top:2px}
 
+    /* Weekly average */
+    .wavg-row{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+    .wavg-label{font-size:12px;font-weight:600;color:var(--text-sec);white-space:nowrap}
+    .wavg-date{flex:1;max-width:160px;font-size:14px;padding:8px 10px}
+    .wavg-result{min-height:36px}
+    .wavg-stat{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+    .wavg-num{font-family:'Fraunces',serif;font-size:32px;font-weight:900;color:var(--primary);line-height:1}
+    .wavg-unit{font-size:13px;font-weight:600;color:var(--text-sec)}
+    .wavg-detail{font-size:11px;color:var(--text-ter);margin-top:4px}
+
     /* Period navigation (swipe) */
     .period-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:16px;user-select:none}
     .period-nav-btn{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);background:var(--bg-card);color:var(--text);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
@@ -402,6 +412,15 @@
         <div class="chart-card">
           <h3>Daily Cases</h3>
           <div class="chart-wrap"><canvas id="dailyChart"></canvas></div>
+        </div>
+        <div class="chart-card" id="weeklyAvgCard">
+          <h3>Weekly Average</h3>
+          <div class="wavg-row">
+            <label class="wavg-label">From</label>
+            <input type="date" class="form-input wavg-date" id="wavgStart">
+            <label class="wavg-label">to today</label>
+          </div>
+          <div id="wavgResult" class="wavg-result"></div>
         </div>
         <div class="data-section">
           <h3>Data Management</h3>
@@ -1520,6 +1539,7 @@
       const labels = days.map(d => fmtShort(d));
       const data = days.map(d => countMap[d] || 0);
       renderDailyChart(labels, data);
+      renderWeeklyAvg();
     }
 
     function getChartColors() {
@@ -1548,6 +1568,33 @@
       $('periodSel').innerHTML = PERIODS.map(p =>
         '<button class="period-btn ' + (p.key === selectedPeriod ? 'active' : '') + '" data-period="' + p.key + '">' + p.label + '</button>'
       ).join('');
+    }
+
+    async function renderWeeklyAvg() {
+      var startDate = $('wavgStart').value;
+      var resultEl = $('wavgResult');
+      if (!resultEl) return;
+      if (!startDate) {
+        resultEl.innerHTML = '<div class="wavg-detail">Select a start date to calculate.</div>';
+        return;
+      }
+      var today = todayStr();
+      if (startDate > today) {
+        resultEl.innerHTML = '<div class="wavg-detail">Start date cannot be in the future.</div>';
+        return;
+      }
+      var counts = await getCountsRange(startDate, today);
+      var total = counts.reduce(function(s, c) { return s + c.count; }, 0);
+      var totalDays = diffDays(today, startDate) + 1; // inclusive
+      var weeks = totalDays / 7;
+      var avg = weeks > 0 ? (total / weeks) : 0;
+      var avgStr = avg % 1 === 0 ? String(avg) : avg.toFixed(1);
+
+      resultEl.innerHTML = '<div class="wavg-stat">'
+        + '<span class="wavg-num">' + avgStr + '</span>'
+        + '<span class="wavg-unit">cases / week</span>'
+        + '</div>'
+        + '<div class="wavg-detail">' + total + ' total cases over ' + totalDays + ' days (' + weeks.toFixed(1) + ' weeks)</div>';
     }
 
     /* ===== EXPORT / IMPORT ===== */
@@ -1621,6 +1668,7 @@
     });
     $('anStart').addEventListener('change', () => { if (selectedPeriod === 'custom') renderAnalytics(); });
     $('anEnd').addEventListener('change', () => { if (selectedPeriod === 'custom') renderAnalytics(); });
+    $('wavgStart').addEventListener('change', renderWeeklyAvg);
 
     // Period nav arrow buttons
     $('periodPrev').addEventListener('click', () => {
